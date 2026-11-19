@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Paper Issue Register - MIC Arts and Science College</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter for UI & Libre Baskerville / Cambria fallback for Official Document -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Screen UI Font */
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+
+        /* Official Register Sheet Typography */
+        .official-doc {
+            font-family: 'Cambria', 'Times New Roman', Georgia, Times, serif;
+            color: #000000;
+            background: #ffffff;
+        }
+
+        /* Header / Metadata Inline Inputs */
+        .doc-input {
+            font-family: 'Cambria', 'Times New Roman', Georgia, Times, serif;
+            background: transparent;
+            border: none;
+            border-bottom: 1.2px dotted #475569;
+            outline: none;
+            color: #000000;
+            padding: 1px 4px;
+            transition: background-color 0.15s ease, border-color 0.15s ease;
+        }
+
+        .doc-input:hover, .doc-input:focus {
+            background-color: #f8fafc;
+            border-bottom: 1.5px solid #4f46e5;
+        }
+
+        /* Table Cell Inputs & Auto-Expanding Textareas */
+        .cell-input {
+            font-family: 'Cambria', 'Times New Roman', Georgia, Times, serif;
+            width: 100%;
+            min-height: 28px;
+            background: transparent;
+            border: none;
+            outline: none;
+            padding: 5px 6px;
+            color: #000000;
+            font-size: 10pt;
+            line-height: 1.32;
+            resize: none;
+            overflow: hidden;
+            display: block;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+
+        .cell-input:hover {
+            background-color: #f8fafc;
+        }
+
+        .cell-input:focus {
+            background-color: #eef2ff;
+        }
+
+        /* Official Register Table Grid */
+        .register-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .register-table th,
+        .register-table td {
+            border: 1px solid #000000;
+            vertical-align: middle;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .register-table th {
+            font-weight: 700;
+            text-align: center;
+            padding: 6px 4px;
+            font-size: 9.5pt;
+            letter-spacing: 0.02em;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+
+        .register-table td {
+            font-size: 10pt;
+            padding: 0;
+        }
+
+        /* Metadata Structured Grid */
+        .meta-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .meta-table td {
+            border: 1px solid #000000;
+            padding: 5px 8px;
+            font-size: 10.5pt;
+        }
+
+        /* Hide Number Spinners */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* Custom Scrollbar for horizontal overflow on small mobile screens */
+        .table-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+        .table-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+
+        /* Strict A4 Portrait Official Print Styles */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 10mm 10mm 12mm 10mm;
+            }
+
+            body {
+                background: #ffffff !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .print-container {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                border-radius: 0 !important;
+            }
+
+            .official-doc {
+                font-size: 10.5pt !important;
+                line-height: 1.25 !important;
+            }
+
+            .doc-input {
+                border-bottom: 1px dotted #000000 !important;
+                background: transparent !important;
+                padding: 0 2px !important;
+            }
+
+            select.doc-input, select.cell-input {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                background: transparent !important;
+                padding-right: 0 !important;
+            }
+
+            input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+            }
+
+            .register-table th {
+                background-color: #f1f5f9 !important;
+                color: #000000 !important;
+                font-size: 9pt !important;
+                padding: 4px 3px !important;
+            }
+
+            .register-table td {
+                font-size: 9.5pt !important;
+            }
+
+            .cell-input {
+                font-size: 9.5pt !important;
+                line-height: 1.22 !important;
+                padding: 3px 4px !important;
+                background: transparent !important;
+                min-height: 22px !important;
+            }
+
+            .register-table tr {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .examiner-block {
+                margin-bottom: 12px !important;
+            }
+
+            .examiner-header-strip {
+                background-color: #f8fafc !important;
+                border: 1px solid #000000 !important;
+                border-bottom: none !important;
+                padding: 4px 8px !important;
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+
+            .gross-total-row td {
+                background-color: #f8fafc !important;
+            }
+
+            .signoff-box {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-14">
+
+    <!-- Executive Sticky Navigation Bar (Hidden in Print) -->
+    <header class="no-print sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md text-white shadow-lg border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+            <!-- Brand & Auto-Save Status -->
+            <div class="flex items-center gap-3">
+                <div class="bg-gradient-to-br from-indigo-500 to-blue-600 p-2.5 rounded-xl shadow-md ring-1 ring-white/15">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-sm sm:text-base font-bold tracking-tight text-white">University Paper Issue Register</h1>
+                        <span class="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
+                            FYUGP Portal
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 mt-0.5">
+                        <span>MIC Arts & Science College, Athanikkal</span>
+                        <span>•</span>
+                        <span id="save-status" class="text-emerald-400 font-medium inline-flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Saved locally
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Controls -->
+            <div class="flex flex-wrap items-center gap-2">
+                <button onclick="loadSampleExample()" title="Load Political Science Sample Register" class="px-3 py-2 bg-indigo-600/90 hover:bg-indigo-500 text-white text-xs sm:text-sm font-medium rounded-lg transition flex items-center gap-1.5 shadow-sm ring-1 ring-indigo-400/30">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    <span>Load Sample (Pol. Science)</span>
+                </button>
+
+                <button onclick="addExaminerBlock()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white text-xs sm:text-sm font-medium rounded-lg transition flex items-center gap-1.5 shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    <span>Add Examiner</span>
+                </button>
+
+                <button onclick="exportJSON()" title="Download JSON Backup" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-medium rounded-lg border border-slate-700 transition flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    <span class="hidden md:inline">Backup</span>
+                </button>
+
+                <label title="Restore from JSON Backup" class="cursor-pointer px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-medium rounded-lg border border-slate-700 transition flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                    <span class="hidden md:inline">Restore</span>
+                    <input type="file" id="import-file" accept=".json" class="hidden" onchange="importJSON(event)">
+                </label>
+
+                <button onclick="openResetModal()" title="Clear or Reset Register" class="px-3 py-2 bg-rose-600/90 hover:bg-rose-600 text-white text-xs sm:text-sm font-medium rounded-lg transition flex items-center gap-1.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    <span class="hidden sm:inline">Clear All</span>
+                </button>
+
+                <button onclick="prepareAndPrint()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white text-xs sm:text-sm font-semibold rounded-lg transition flex items-center gap-1.5 shadow-md ring-1 ring-blue-400/30">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    <span>Print / Save PDF</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Live Summary KPI Strip (Hidden in Print) -->
+    <section class="no-print max-w-[225mm] mx-auto mt-5 px-3 sm:px-0">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <!-- KPI 1: Additional Examiners -->
+            <div class="bg-white rounded-xl border border-slate-200/90 p-3.5 shadow-xs flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Additional Examiners</p>
+                    <p id="kpi-examiners" class="text-2xl font-extrabold text-slate-900 mt-0.5">0</p>
+                </div>
+                <div class="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                </div>
+            </div>
+
+            <!-- KPI 2: Active Sessions / Entries -->
+            <div class="bg-white rounded-xl border border-slate-200/90 p-3.5 shadow-xs flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Recorded Sessions / Rows</p>
+                    <p id="kpi-sessions" class="text-2xl font-extrabold text-slate-900 mt-0.5">0</p>
+                </div>
+                <div class="w-10 h-10 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                </div>
+            </div>
+
+            <!-- KPI 3: Grand Total Papers Issued -->
+            <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-xl border border-slate-800 p-3.5 shadow-sm flex items-center justify-between text-white">
+                <div>
+                    <p class="text-[11px] font-semibold uppercase tracking-wider text-indigo-300">Grand Total Papers Issued</p>
+                    <p id="kpi-grand-total" class="text-2xl font-extrabold text-amber-400 mt-0.5">0</p>
+                </div>
+                <div class="w-10 h-10 rounded-lg bg-white/10 text-amber-300 flex items-center justify-center">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subtle Usage Guide Banner -->
+        <div class="mt-3 bg-indigo-50/80 border border-indigo-200/80 text-indigo-950 px-4 py-2 rounded-xl text-xs flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-indigo-600"></span>
+                <span><strong>Multi-Line Smart Cells:</strong> Press <kbd class="px-1.5 py-0.5 bg-white border border-indigo-200 rounded text-[11px] font-sans font-semibold">Enter</kbd> inside Course, QP Code, Date, Reg. No, or Count to stack multiple entries in one session. Multi-line counts auto-sum!</span>
+            </div>
+            <span class="font-semibold text-indigo-700">A4 Portrait Official Print Format</span>
+        </div>
+    </section>
+
+    <!-- Main A4 Official Register Sheet -->
+    <main class="max-w-[225mm] mx-auto mt-4 mb-10 px-2 sm:px-0">
+        <div class="print-container official-doc bg-white shadow-xl rounded-2xl border border-slate-300/90 p-4 sm:p-8 md:p-10">
+            
+            <!-- Official Institutional Title Header -->
+            <div class="text-center font-bold tracking-wide space-y-1 pb-3 mb-4 border-b-2 border-black">
+                <div class="text-sm sm:text-base md:text-[13pt] uppercase flex flex-wrap items-center justify-center gap-1">
+                    <span>CALICUT UNIVERSITY</span>
+                    <select id="semester" onchange="handleHeaderChange()" aria-label="Semester" class="doc-input font-bold uppercase text-center cursor-pointer">
+                        <option value="FIRST">FIRST</option>
+                        <option value="SECOND">SECOND</option>
+                        <option value="THIRD">THIRD</option>
+                        <option value="FOURTH">FOURTH</option>
+                        <option value="FIFTH" selected>FIFTH</option>
+                        <option value="SIXTH">SIXTH</option>
+                        <option value="SEVENTH">SEVENTH</option>
+                        <option value="EIGHTH">EIGHTH</option>
+                        <option value="…………">…………</option>
+                    </select>
+                    <span>SEMESTER FYUGP EXAMINATIONS</span>
+                    <input type="text" id="exam-session" value="NOVEMBER 2026" oninput="handleHeaderChange()" placeholder="MONTH YEAR" class="doc-input font-bold uppercase text-center w-40 sm:w-44">
+                </div>
+
+                <div class="text-base sm:text-lg md:text-[13.5pt] uppercase tracking-wider pt-0.5">
+                    UNIVERSITY PAPER ISSUE REGISTER
+                </div>
+
+                <div class="text-xs sm:text-sm md:text-[12pt] uppercase font-bold">
+                    MIC ARTS AND SCIENCE COLLEGE, ATHANIKKAL
+                </div>
+            </div>
+
+            <!-- Structured 2-Column Metadata Grid -->
+            <div class="mb-5">
+                <table class="meta-table">
+                    <tbody>
+                        <tr>
+                            <td colspan="2" class="bg-slate-50/70">
+                                <div class="flex flex-wrap items-baseline gap-2 font-bold">
+                                    <label for="department" class="whitespace-nowrap">DEPARTMENT :</label>
+                                    <input type="text" id="department" oninput="handleHeaderChange()" placeholder="ENTER DEPARTMENT NAME" class="doc-input flex-1 min-w-[200px] font-bold uppercase">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-1/2">
+                                <div class="flex flex-wrap items-baseline gap-2 font-bold">
+                                    <label for="chairman" class="whitespace-nowrap">NAME OF CHAIRMAN :</label>
+                                    <input type="text" id="chairman" oninput="handleHeaderChange()" placeholder="ENTER CHAIRMAN NAME" class="doc-input flex-1 min-w-[140px] font-bold uppercase">
+                                </div>
+                            </td>
+                            <td class="w-1/2">
+                                <div class="flex flex-wrap items-baseline gap-2 font-bold">
+                                    <label for="chief-examiner" class="whitespace-nowrap">CHIEF EXAMINER :</label>
+                                    <input type="text" id="chief-examiner" oninput="handleHeaderChange()" placeholder="ENTER CHIEF EXAMINER" class="doc-input flex-1 min-w-[140px] font-bold uppercase">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Dynamic Additional Examiner Blocks -->
+            <div id="examiner-blocks-container" class="space-y-6">
+                <!-- Examiner blocks injected dynamically -->
+            </div>
+
+            <!-- Bottom Add Block Button (Hidden in Print) -->
+            <div class="no-print mt-6 pt-4 border-t border-dashed border-slate-300 flex justify-center">
+                <button onclick="addExaminerBlock()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-sans text-xs sm:text-sm font-semibold rounded-xl border border-slate-300 transition flex items-center gap-2 shadow-2xs">
+                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                    <span>+ Add Another Additional Examiner Block</span>
+                </button>
+            </div>
+
+            <!-- Official Summary & Verification Sign-Off Strip (Visible on Screen & Print) -->
+            <div class="signoff-box mt-7 pt-3 border-t-2 border-black">
+                <div class="flex flex-wrap items-center justify-between gap-2 bg-slate-50 border border-black px-3 py-2 font-bold text-xs sm:text-sm md:text-[11pt]">
+                    <span>SUMMARY &amp; VERIFICATION</span>
+                    <span>GRAND TOTAL PAPERS ISSUED : <span id="sheet-grand-total" class="underline underline-offset-4 px-1">0</span></span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-8 mt-10 pt-2 text-xs sm:text-sm md:text-[10.5pt] font-bold">
+                    <div class="text-left">
+                        <div class="border-t border-black w-48 sm:w-56 pt-1">
+                            Signature of Chief Examiner
+                        </div>
+                    </div>
+                    <div class="text-right flex flex-col items-end">
+                        <div class="border-t border-black w-52 sm:w-64 pt-1 text-center">
+                            Signature of Chairman / Chief Superintendent
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Reset / Clear Confirmation Modal (No native alert/confirm) -->
+    <div id="reset-modal" class="no-print hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+            <div class="flex items-center gap-3 text-rose-600 mb-3">
+                <div class="bg-rose-100 p-2 rounded-full">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900">Clear or Reset Register?</h3>
+            </div>
+            <p class="text-sm text-slate-600 mb-5 leading-relaxed">
+                Choose how you would like to reset the register. Download a JSON backup first if you want to keep a copy of your current entries.
+            </p>
+            <div class="space-y-2.5">
+                <button onclick="clearAllData()" class="w-full py-2.5 px-4 bg-rose-600 hover:bg-rose-700 text-white text-sm font-semibold rounded-xl transition">
+                    Reset Everything to Default (3 Blank Blocks)
+                </button>
+                <button onclick="clearCountsAndRowsOnly()" class="w-full py-2.5 px-4 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-xl transition">
+                    Keep Header &amp; Examiner Names, Clear Rows Only
+                </button>
+                <button onclick="closeResetModal()" class="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-xl transition">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Non-Intrusive Toast Notification -->
+    <div id="toast" class="no-print fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl border border-slate-700 text-sm font-medium flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span id="toast-message">Notification</span>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'mic_paper_issue_register_v2';
+        let appState = null;
+
+        /**
+         * Create a single blank table row
+         */
+        function createEmptyRow() {
+            return {
+                course: '',
+                qpCode: '',
+                date: '',
+                session: '',
+                regNo: '',
+                count: ''
+            };
+        }
+
+        /**
+         * Create a blank Additional Examiner block with 4 rows
+         */
+        function createEmptyBlock(index = 1) {
+            return {
+                id: 'blk_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+                examinerName: '',
+                manualGrossTotal: null,
+                rows: [
+                    createEmptyRow(),
+                    createEmptyRow(),
+                    createEmptyRow(),
+                    createEmptyRow()
+                ]
+            };
+        }
+
+        /**
+         * Default initial state (3 Additional Examiner blocks, 4 rows each)
+         */
+        function getDefaultState() {
+            return {
+                semester: 'FIFTH',
+                examSession: 'NOVEMBER 2026',
+                department: '',
+                chairman: '',
+                chiefExaminer: '',
+                blocks: [
+                    createEmptyBlock(1),
+                    createEmptyBlock(2),
+                    createEmptyBlock(3)
+                ]
+            };
+        }
+
+        /**
+         * Load state from localStorage with graceful fallback
+         */
+        function loadState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (parsed && Array.isArray(parsed.blocks) && parsed.blocks.length > 0) {
+                        appState = parsed;
+                        return;
+                    }
+                }
+            } catch (err) {
+                console.warn('Could not read saved register state:', err);
+            }
+            appState = getDefaultState();
+        }
+
+        /**
+         * Persist state to localStorage and update status indicator
+         */
+        function saveState() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+                const statusEl = document.getElementById('save-status');
+                if (statusEl) {
+                    statusEl.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Saved locally';
+                }
+            } catch (err) {
+                console.warn('Failed to save register state:', err);
+            }
+        }
+
+        /**
+         * Show brief toast feedback
+         */
+        let toastTimer = null;
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toast-message');
+            if (!toast || !msgEl) return;
+            msgEl.textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2600);
+        }
+
+        /**
+         * Auto-resize textarea height to fit all wrapped/multi-line content without clipping
+         */
+        function autoResizeTextarea(el) {
+            if (!el) return;
+            el.style.height = 'auto';
+            el.style.height = Math.max(28, el.scrollHeight) + 'px';
+        }
+
+        function resizeAllTextareas() {
+            document.querySelectorAll('textarea.cell-input').forEach(autoResizeTextarea);
+        }
+
+        /**
+         * Parse single or multi-line counts (e.g., "5\n13" => 18)
+         */
+        function parseCellCount(countStr) {
+            if (countStr === null || countStr === undefined || countStr === '') return 0;
+            const matches = String(countStr).match(/\d+/g);
+            if (!matches) return 0;
+            return matches.reduce((sum, numStr) => sum + parseInt(numStr, 10), 0);
+        }
+
+        /**
+         * Calculate auto-sum of all rows in a block
+         */
+        function calculateBlockSum(block) {
+            return block.rows.reduce((sum, row) => sum + parseCellCount(row.count), 0);
+        }
+
+        /**
+         * Effective gross total for a block (auto-sum unless manually overridden)
+         */
+        function getBlockGrossTotal(block) {
+            if (block.manualGrossTotal !== null && block.manualGrossTotal !== '') {
+                const parsed = parseInt(block.manualGrossTotal, 10);
+                return isNaN(parsed) ? 0 : parsed;
+            }
+            return calculateBlockSum(block);
+        }
+
+        /**
+         * Update KPI cards, block badges, and sheet Grand Total
+         */
+        function updateKPIsAndTotals() {
+            const totalExaminers = appState.blocks.length;
+            let activeSessions = 0;
+            let grandTotal = 0;
+
+            appState.blocks.forEach((blk, idx) => {
+                const blkTotal = getBlockGrossTotal(blk);
+                grandTotal += blkTotal;
+
+                const badgeEl = document.getElementById(`block-badge-total-${idx}`);
+                if (badgeEl) {
+                    badgeEl.textContent = blkTotal;
+                }
+
+                blk.rows.forEach(r => {
+                    if (
+                        (r.course && r.course.trim() !== '') ||
+                        (r.qpCode && r.qpCode.trim() !== '') ||
+                        (r.date && r.date.trim() !== '') ||
+                        (r.regNo && r.regNo.trim() !== '') ||
+                        (r.count && String(r.count).trim() !== '')
+                    ) {
+                        activeSessions++;
+                    }
+                });
+            });
+
+            const kpiExamEl = document.getElementById('kpi-examiners');
+            const kpiSessEl = document.getElementById('kpi-sessions');
+            const kpiGrandEl = document.getElementById('kpi-grand-total');
+            const sheetGrandEl = document.getElementById('sheet-grand-total');
+
+            if (kpiExamEl) kpiExamEl.textContent = totalExaminers;
+            if (kpiSessEl) kpiSessEl.textContent = activeSessions;
+            if (kpiGrandEl) kpiGrandEl.textContent = grandTotal;
+            if (sheetGrandEl) sheetGrandEl.textContent = grandTotal;
+        }
+
+        /**
+         * Sync header inputs from appState
+         */
+        function renderHeader() {
+            document.getElementById('semester').value = appState.semester || 'FIFTH';
+            document.getElementById('exam-session').value = appState.examSession || '';
+            document.getElementById('department').value = appState.department || '';
+            document.getElementById('chairman').value = appState.chairman || '';
+            document.getElementById('chief-examiner').value = appState.chiefExaminer || '';
+        }
+
+        /**
+         * Handle header input changes
+         */
+        function handleHeaderChange() {
+            appState.semester = document.getElementById('semester').value;
+            appState.examSession = document.getElementById('exam-session').value;
+            appState.department = document.getElementById('department').value;
+            appState.chairman = document.getElementById('chairman').value;
+            appState.chiefExaminer = document.getElementById('chief-examiner').value;
+            saveState();
+        }
+
+        /**
+         * Safely escape HTML characters
+         */
+        function escapeHtml(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        /**
+         * Render all Additional Examiner blocks
+         */
+        function renderBlocks() {
+            const container = document.getElementById('examiner-blocks-container');
+            container.innerHTML = '';
+
+            appState.blocks.forEach((block, blockIndex) => {
+                const autoSum = calculateBlockSum(block);
+                const effectiveTotal = getBlockGrossTotal(block);
+                const displayTotal = block.manualGrossTotal !== null ? block.manualGrossTotal : (autoSum > 0 ? autoSum : '');
+
+                const blockDiv = document.createElement('div');
+                blockDiv.className = 'examiner-block';
+
+                // Examiner Header Bar
+                const headerHtml = `
+                    <div class="examiner-header-strip bg-slate-100/90 border border-black border-b-0 px-3 py-2 flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-baseline gap-2 flex-1 min-w-[230px]">
+                            <span class="font-bold text-xs sm:text-sm md:text-[11pt] whitespace-nowrap">ADDITIONAL EXAMINER :</span>
+                            <input 
+                                type="text" 
+                                value="${escapeHtml(block.examinerName)}" 
+                                oninput="updateExaminerName(${blockIndex}, this.value)"
+                                placeholder="ENTER ADDITIONAL EXAMINER NAME"
+                                class="doc-input flex-1 font-bold uppercase text-xs sm:text-sm md:text-[11pt]"
+                            >
+                        </div>
+
+                        <div class="no-print flex flex-wrap items-center gap-2 font-sans">
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-800 text-white text-xs font-semibold">
+                                GROSS TOTAL : <span id="block-badge-total-${blockIndex}" class="text-amber-300 font-bold">${effectiveTotal}</span>
+                            </span>
+                            <button onclick="addRowToBlock(${blockIndex})" class="px-2.5 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md text-xs font-semibold transition shadow-2xs">
+                                + Add Row
+                            </button>
+                            ${appState.blocks.length > 1 ? `
+                            <button onclick="removeBlock(${blockIndex})" title="Delete this examiner block" class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-md text-xs font-semibold transition">
+                                Delete Examiner
+                            </button>` : ''}
+                        </div>
+                    </div>
+                `;
+
+                // Table Rows
+                let rowsHtml = '';
+                block.rows.forEach((row, rowIndex) => {
+                    rowsHtml += `
+                        <tr class="group">
+                            <td class="text-center font-semibold select-none">${rowIndex + 1}</td>
+                            <td>
+                                <textarea rows="1" oninput="autoResizeTextarea(this); updateRowField(${blockIndex}, ${rowIndex}, 'course', this.value)" class="cell-input uppercase" aria-label="Course or Paper Name">${escapeHtml(row.course)}</textarea>
+                            </td>
+                            <td>
+                                <textarea rows="1" oninput="autoResizeTextarea(this); updateRowField(${blockIndex}, ${rowIndex}, 'qpCode', this.value)" class="cell-input text-center uppercase" aria-label="QP Code">${escapeHtml(row.qpCode)}</textarea>
+                            </td>
+                            <td>
+                                <textarea rows="1" oninput="autoResizeTextarea(this); updateRowField(${blockIndex}, ${rowIndex}, 'date', this.value)" class="cell-input text-center" aria-label="Date">${escapeHtml(row.date)}</textarea>
+                            </td>
+                            <td>
+                                <select onchange="updateRowField(${blockIndex}, ${rowIndex}, 'session', this.value)" class="cell-input text-center font-semibold cursor-pointer" aria-label="Session FN or AN">
+                                    <option value="" ${row.session === '' ? 'selected' : ''}></option>
+                                    <option value="FN" ${row.session === 'FN' ? 'selected' : ''}>FN</option>
+                                    <option value="AN" ${row.session === 'AN' ? 'selected' : ''}>AN</option>
+                                </select>
+                            </td>
+                            <td>
+                                <textarea rows="1" oninput="autoResizeTextarea(this); updateRowField(${blockIndex}, ${rowIndex}, 'regNo', this.value)" class="cell-input text-center uppercase" aria-label="Register Number">${escapeHtml(row.regNo)}</textarea>
+                            </td>
+                            <td>
+                                <textarea rows="1" oninput="autoResizeTextarea(this); updateRowCount(${blockIndex}, ${rowIndex}, this.value)" class="cell-input text-center font-bold" aria-label="Paper Count">${escapeHtml(row.count)}</textarea>
+                            </td>
+                            <td class="relative">
+                                <!-- Blank signature cell for physical signature on printout -->
+                                ${block.rows.length > 1 ? `
+                                <button onclick="removeRowFromBlock(${blockIndex}, ${rowIndex})" title="Delete this row" class="no-print opacity-0 group-hover:opacity-100 focus:opacity-100 absolute right-1 top-1/2 -translate-y-1/2 bg-rose-100 hover:bg-rose-600 text-rose-700 hover:text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-sans font-bold transition shadow-xs">
+                                    ×
+                                </button>` : ''}
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                // Complete Table with Integrated Gross Total Footer Row
+                const tableHtml = `
+                    <div class="table-scroll overflow-x-auto sm:overflow-visible">
+                        <table class="register-table min-w-[700px] sm:min-w-full">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%;">SL. NO</th>
+                                    <th style="width: 32%;">COURSE / PAPER NAME</th>
+                                    <th style="width: 12%;">QP CODE</th>
+                                    <th style="width: 12%;">DATE</th>
+                                    <th style="width: 7%;">FN / AN</th>
+                                    <th style="width: 17%;">REG. NO</th>
+                                    <th style="width: 7%;">COUNT</th>
+                                    <th style="width: 8%;">SIGN</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${rowsHtml}
+                                <tr class="gross-total-row bg-slate-50/80">
+                                    <td colspan="6" class="text-right pr-3 py-1.5 font-bold text-xs sm:text-sm md:text-[10.5pt]">
+                                        GROSS TOTAL :
+                                    </td>
+                                    <td class="text-center py-1 px-1">
+                                        <input 
+                                            type="number" 
+                                            id="gross-total-${blockIndex}"
+                                            value="${displayTotal}" 
+                                            oninput="updateManualGrossTotal(${blockIndex}, this.value)"
+                                            class="w-full text-center font-bold bg-transparent outline-none text-xs sm:text-sm md:text-[10.5pt]"
+                                            aria-label="Gross Total"
+                                        >
+                                    </td>
+                                    <td class="text-center py-1">
+                                        ${block.manualGrossTotal !== null ? `
+                                        <button onclick="resetManualGrossTotal(${blockIndex})" class="no-print font-sans text-[10px] text-indigo-600 hover:underline font-semibold">
+                                            Auto (${autoSum})
+                                        </button>` : ''}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+
+                blockDiv.innerHTML = headerHtml + tableHtml;
+                container.appendChild(blockDiv);
+            });
+
+            resizeAllTextareas();
+            updateKPIsAndTotals();
+        }
+
+        /**
+         * Update Examiner Name
+         */
+        function updateExaminerName(blockIndex, value) {
+            appState.blocks[blockIndex].examinerName = value;
+            saveState();
+        }
+
+        /**
+         * Update text/select cell field and refresh KPIs
+         */
+        function updateRowField(blockIndex, rowIndex, field, value) {
+            appState.blocks[blockIndex].rows[rowIndex][field] = value;
+            updateKPIsAndTotals();
+            saveState();
+        }
+
+        /**
+         * Update numeric Count field and recalculate block & grand totals live
+         */
+        function updateRowCount(blockIndex, rowIndex, value) {
+            appState.blocks[blockIndex].rows[rowIndex].count = value;
+            const block = appState.blocks[blockIndex];
+
+            if (block.manualGrossTotal === null) {
+                const autoSum = calculateBlockSum(block);
+                const grossInput = document.getElementById(`gross-total-${blockIndex}`);
+                if (grossInput) {
+                    grossInput.value = autoSum > 0 ? autoSum : '';
+                }
+            }
+
+            updateKPIsAndTotals();
+            saveState();
+        }
+
+        /**
+         * Manual override of Gross Total
+         */
+        function updateManualGrossTotal(blockIndex, value) {
+            if (value === '') {
+                appState.blocks[blockIndex].manualGrossTotal = null;
+            } else {
+                appState.blocks[blockIndex].manualGrossTotal = value;
+            }
+            updateKPIsAndTotals();
+            saveState();
+        }
+
+        /**
+         * Revert manual Gross Total back to automatic sum
+         */
+        function resetManualGrossTotal(blockIndex) {
+            appState.blocks[blockIndex].manualGrossTotal = null;
+            renderBlocks();
+            saveState();
+        }
+
+        /**
+         * Add a new row to a specific examiner block
+         */
+        function addRowToBlock(blockIndex) {
+            appState.blocks[blockIndex].rows.push(createEmptyRow());
+            renderBlocks();
+            saveState();
+        }
+
+        /**
+         * Remove a specific row from an examiner block
+         */
+        function removeRowFromBlock(blockIndex, rowIndex) {
+            if (appState.blocks[blockIndex].rows.length > 1) {
+                appState.blocks[blockIndex].rows.splice(rowIndex, 1);
+                renderBlocks();
+                saveState();
+            }
+        }
+
+        /**
+         * Add a new Additional Examiner block
+         */
+        function addExaminerBlock() {
+            appState.blocks.push(createEmptyBlock(appState.blocks.length + 1));
+            renderBlocks();
+            saveState();
+            showToast('Added new Additional Examiner block');
+        }
+
+        /**
+         * Remove an examiner block
+         */
+        function removeBlock(blockIndex) {
+            if (appState.blocks.length > 1) {
+                appState.blocks.splice(blockIndex, 1);
+                renderBlocks();
+                saveState();
+                showToast('Examiner block removed');
+            }
+        }
+
+        /**
+         * Modal Controls
+         */
+        function openResetModal() {
+            document.getElementById('reset-modal').classList.remove('hidden');
+        }
+
+        function closeResetModal() {
+            document.getElementById('reset-modal').classList.add('hidden');
+        }
+
+        /**
+         * Full Reset to default 3 blank blocks
+         */
+        function clearAllData() {
+            appState = getDefaultState();
+            renderHeader();
+            renderBlocks();
+            saveState();
+            closeResetModal();
+            showToast('Register reset to blank template');
+        }
+
+        /**
+         * Clear table entries while keeping header & examiner names
+         */
+        function clearCountsAndRowsOnly() {
+            appState.blocks.forEach(block => {
+                block.manualGrossTotal = null;
+                block.rows = [
+                    createEmptyRow(),
+                    createEmptyRow(),
+                    createEmptyRow(),
+                    createEmptyRow()
+                ];
+            });
+            renderBlocks();
+            saveState();
+            closeResetModal();
+            showToast('Cleared table rows while keeping examiner names');
+        }
+
+        /**
+         * Export current register data as a downloadable JSON file
+         */
+        function exportJSON() {
+            try {
+                const dataStr = JSON.stringify(appState, null, 2);
+                const blob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                const deptSlug = (appState.department || 'REGISTER').replace(/[^a-zA-Z0-9]/g, '_');
+                const dateSlug = new Date().toISOString().slice(0, 10);
+                link.href = url;
+                link.download = `Paper_Issue_Register_${deptSlug}_${dateSlug}.json`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                showToast('Backup JSON downloaded');
+            } catch (e) {
+                showToast('Failed to export backup');
+            }
+        }
+
+        /**
+         * Import register data from a previously exported JSON file
+         */
+        function importJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (imported && Array.isArray(imported.blocks)) {
+                        appState = imported;
+                        renderHeader();
+                        renderBlocks();
+                        saveState();
+                        showToast('Register restored from backup');
+                    } else {
+                        showToast('Invalid backup file format');
+                    }
+                } catch (err) {
+                    showToast('Could not read backup file');
+                }
+                event.target.value = '';
+            };
+            reader.readAsText(file);
+        }
+
+        /**
+         * Ensure all textareas are expanded to full height before triggering print dialog
+         */
+        function prepareAndPrint() {
+            resizeAllTextareas();
+            setTimeout(() => {
+                window.print();
+            }, 60);
+        }
+
+        /**
+         * Load the Department of Political Science sample data
+         */
+        function loadSampleExample() {
+            appState = {
+                semester: 'FIFTH',
+                examSession: 'NOVEMBER 2026',
+                department: 'DEPARTMENT OF POLITICAL SCIENCE',
+                chairman: 'NAMSHEER KK',
+                chiefExaminer: 'NAMSHEER KK',
+                blocks: [
+                    {
+                        id: 'blk_sample_1',
+                        examinerName: '1. ASHAHRUDHEEN V',
+                        manualGrossTotal: null,
+                        rows: [
+                            {
+                                course: 'INDIAN POLITICAL THOUGHT POL5CJ303',
+                                qpCode: 'D153418',
+                                date: '10-11-2026',
+                                session: 'FN',
+                                regNo: 'VUAYAPO001 - VUAYAPO019',
+                                count: '18'
+                            },
+                            {
+                                course: 'INDIAN POLITICAL THOUGHT POL5CJ303',
+                                qpCode: 'D153418',
+                                date: '10-11-2026',
+                                session: 'AN',
+                                regNo: 'VUAYAPO020 - VUAYAPO034',
+                                count: '12'
+                            },
+                            {
+                                course: 'INDIAN POLITICAL THOUGHT POL5CJ303\nENVIRONMENT AND POLITICS POL5EJ304',
+                                qpCode: 'D153418\nD154284',
+                                date: '11-11-2026\n11-11-2026',
+                                session: 'FN',
+                                regNo: 'VUAYAPO036 - VUAYAPO041\nVUAYAPO020 - VUAYAPO036',
+                                count: '5\n13'
+                            },
+                            {
+                                course: 'SOUTH ASIAN POLITICS POL5EJ302',
+                                qpCode: 'D153833',
+                                date: '11-11-2026',
+                                session: 'AN',
+                                regNo: 'VUAYAPO024 - VUAYAPO039',
+                                count: '12'
+                            }
+                        ]
+                    },
+                    {
+                        id: 'blk_sample_2',
+                        examinerName: '2. SALIH K',
+                        manualGrossTotal: null,
+                        rows: [
+                            {
+                                course: 'COMPARATIVE POLITICS POL5CJ302',
+                                qpCode: 'D153417',
+                                date: '10-11-2026',
+                                session: 'FN',
+                                regNo: 'VUAYAPO001 - VUAYAPO019',
+                                count: '18'
+                            },
+                            {
+                                course: 'COMPARATIVE POLITICS POL5CJ302',
+                                qpCode: 'D153417',
+                                date: '10-11-2026',
+                                session: 'AN',
+                                regNo: 'VUAYAPO020 - VUAYAPO034',
+                                count: '12'
+                            },
+                            {
+                                course: 'COMPARATIVE POLITICS POL5CJ302\nENVIRONMENT AND POLITICS POL5EJ304\nSOUTH ASIAN POLITICS POL5EJ302',
+                                qpCode: 'D153417\nD154284\nD153833',
+                                date: '11-11-2026',
+                                session: 'AN',
+                                regNo: 'VUAYAPO036 - VUAYAPO041\nVUAYAPO038 - VUAYAPO041\nVUAYAPO001 - VUAYAPO010',
+                                count: '18'
+                            },
+                            {
+                                course: 'SOUTH ASIAN POLITICS POL5EJ302\nWESTERN POLITICAL THOUGHT POL5CJ301',
+                                qpCode: 'D153833\nD153418',
+                                date: '11-11-2026',
+                                session: 'AN',
+                                regNo: 'VUAYAPO040 - VUAYAPO041\nVUAYAPO001 - VUAYAPO011',
+                                count: '12'
+                            },
+                            {
+                                course: 'WESTERN POLITICAL THOUGHT POL5CJ301',
+                                qpCode: 'D153418',
+                                date: '12-11-2026',
+                                session: 'FN',
+                                regNo: 'VUAYAPO012 - VUAYAPO027',
+                                count: '18'
+                            }
+                        ]
+                    },
+                    {
+                        id: 'blk_sample_3',
+                        examinerName: '3. RADHUVA PARAVIN',
+                        manualGrossTotal: null,
+                        rows: [
+                            {
+                                course: 'POLITICAL REPORTING POL5CJ303',
+                                qpCode: 'D154471',
+                                date: '10-11-2026',
+                                session: 'FN',
+                                regNo: 'VUAYAPO001 - VUAYAPO022',
+                                count: '20'
+                            },
+                            {
+                                course: 'POLITICAL REPORTING POL5CJ303',
+                                qpCode: 'D154471',
+                                date: '10-11-2026',
+                                session: 'AN',
+                                regNo: 'VUAYAPO023 - VUAYAPO034',
+                                count: '15'
+                            },
+                            {
+                                course: 'ENVIRONMENT AND POLITICS POL5EJ304',
+                                qpCode: 'D154284',
+                                date: '11-11-2026',
+                                session: 'FN',
+                                regNo: 'VUAYAPO001 - VUAYAPO019',
+                                count: '18'
+                            },
+                            {
+                                course: 'SOUTH ASIAN POLITICS POL5EJ302',
+                                qpCode: 'D153833',
+                                date: '11-11-2026',
+                                session: 'AN',
+                                regNo: 'VUAYAPO011 - VUAYAPO023',
+                                count: '12'
+                            },
+                            {
+                                course: 'WESTERN POLITICAL THOUGHT POL5CJ301',
+                                qpCode: 'D153418',
+                                date: '12-11-2026',
+                                session: 'FN',
+                                regNo: 'VUAYAPO033 - VUAYAPO041',
+                                count: '7'
+                            }
+                        ]
+                    }
+                ]
+            };
+            renderHeader();
+            renderBlocks();
+            saveState();
+            showToast('Loaded Department of Political Science sample');
+        }
+
+        /**
+         * Initialize Application on Window Load
+         */
+        window.onload = function() {
+            loadState();
+            renderHeader();
+            renderBlocks();
+            setTimeout(resizeAllTextareas, 50);
+        };
+        window.addEventListener('resize', resizeAllTextareas);
+        window.addEventListener('beforeprint', resizeAllTextareas);
+    </script>
+</body>
+</html>
