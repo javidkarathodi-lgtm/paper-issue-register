@@ -4,18 +4,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>University Paper Issue Register — Calicut University FYUGP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f1f5f9;
+      --bg: #eef2f7;
       --surface: #ffffff;
       --ink: #0f172a;
       --muted: #475569;
-      --border: #cbd5e1;
-      --accent: #1e3a8a;
-      --accent-soft: #eff6ff;
+      --border: #dbe3ee;
+      --primary: #1e3a8a;
+      --primary-mid: #2563eb;
+      --primary-soft: #eff6ff;
+      --indigo-soft: #eef2ff;
+      --emerald: #059669;
+      --emerald-soft: #ecfdf5;
+      --amber: #d97706;
+      --amber-soft: #fffbeb;
+      --purple: #6d28d9;
+      --purple-soft: #f5f3ff;
       --danger: #dc2626;
       --danger-soft: #fef2f2;
       --print-line: #000000;
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.07), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
     }
 
     * {
@@ -24,38 +37,60 @@
 
     body {
       margin: 0;
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
-      background: var(--bg);
+      font-family: "Plus Jakarta Sans", "Segoe UI", Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top left, #e0e7ff 0%, #eef2f7 42%, #f8fafc 100%);
       color: var(--ink);
-      line-height: 1.4;
+      line-height: 1.45;
+      min-height: 100vh;
     }
 
+    /* Attractive Gradient Topbar */
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 20;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 12px 20px;
+      z-index: 30;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #1d4ed8 100%);
+      color: #ffffff;
+      padding: 13px 22px;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
 
     .brand h1 {
       margin: 0;
-      font-size: 16px;
+      font-size: 16.5px;
       font-weight: 700;
-      color: var(--accent);
+      letter-spacing: -0.01em;
+      color: #ffffff;
     }
 
     .brand p {
-      margin: 2px 0 0;
-      font-size: 12px;
-      color: var(--muted);
+      margin: 1px 0 0;
+      font-size: 11.5px;
+      color: #cbd5e1;
+      font-weight: 500;
     }
 
     .actions {
@@ -67,45 +102,55 @@
 
     button, .btn-label {
       appearance: none;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--ink);
-      padding: 9px 13px;
-      border-radius: 6px;
-      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      padding: 8px 13px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.15s ease, border-color 0.15s ease;
+      backdrop-filter: blur(6px);
+      transition: all 0.18s ease;
     }
 
     button:hover, .btn-label:hover {
-      background: #f8fafc;
-      border-color: #94a3b8;
+      background: rgba(255, 255, 255, 0.22);
+      border-color: rgba(255, 255, 255, 0.38);
+      transform: translateY(-1px);
     }
 
     button.primary {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #ffffff;
+      background: #ffffff;
+      border-color: #ffffff;
+      color: var(--primary);
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
 
     button.primary:hover {
-      background: #172554;
+      background: #eff6ff;
+      color: #172554;
     }
 
-    button.danger {
-      color: #b91c1c;
-      border-color: #fecaca;
-      background: #fef2f2;
+    button.danger-top {
+      background: rgba(239, 68, 68, 0.18);
+      border-color: rgba(252, 165, 165, 0.4);
+      color: #fee2e2;
     }
 
-    button.danger:hover {
-      background: #fee2e2;
+    button.danger-top:hover {
+      background: rgba(220, 38, 38, 0.85);
+      color: #ffffff;
     }
 
     .container {
-      max-width: 1050px;
-      margin: 20px auto 48px;
+      max-width: 1080px;
+      margin: 22px auto 52px;
       padding: 0 16px;
     }
 
@@ -113,12 +158,14 @@
       display: none;
       background: var(--danger-soft);
       border: 1px solid #fca5a5;
+      border-left: 4px solid var(--danger);
       color: #991b1b;
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin-bottom: 16px;
+      padding: 13px 16px;
+      border-radius: 10px;
+      margin-bottom: 18px;
       font-size: 13px;
       font-weight: 600;
+      box-shadow: var(--shadow-sm);
     }
 
     .validation-banner.show {
@@ -130,77 +177,123 @@
       padding: 0;
     }
 
+    /* Attractive KPI Cards */
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 16px;
+      gap: 14px;
+      margin-bottom: 18px;
     }
 
     .kpi-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px 16px;
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
     }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .kpi-card.blue { border-left: 4px solid var(--primary-mid); }
+    .kpi-card.purple { border-left: 4px solid var(--purple); }
+    .kpi-card.amber { border-left: 4px solid var(--amber); }
+    .kpi-card.emerald { border-left: 4px solid var(--emerald); }
 
     .kpi-label {
       font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
       color: var(--muted);
       font-weight: 700;
     }
 
     .kpi-value {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--accent);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--ink);
       margin-top: 2px;
+      line-height: 1.1;
     }
 
+    .kpi-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .kpi-card.blue .kpi-badge { background: var(--primary-soft); color: var(--primary-mid); }
+    .kpi-card.purple .kpi-badge { background: var(--purple-soft); color: var(--purple); }
+    .kpi-card.amber .kpi-badge { background: var(--amber-soft); color: var(--amber); }
+    .kpi-card.emerald .kpi-badge { background: var(--emerald-soft); color: var(--emerald); }
+
+    /* Main Sheet Document */
     .sheet {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 24px 28px;
-      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+      border-radius: 14px;
+      padding: 28px 32px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sheet::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #1e3a8a, #2563eb, #059669);
     }
 
     .doc-header {
       text-align: center;
       border-bottom: 2px solid var(--print-line);
-      padding-bottom: 12px;
-      margin-bottom: 14px;
+      padding-bottom: 14px;
+      margin-bottom: 16px;
       font-family: Cambria, "Times New Roman", serif;
     }
 
     .doc-college-wrap {
       display: flex;
       justify-content: center;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
     }
 
     .college-input {
       width: 100%;
       max-width: 760px;
-      border: none;
-      border-bottom: 1px dashed #64748b;
+      border: 1px solid transparent;
+      border-bottom: 1.5px dashed #94a3b8;
+      border-radius: 6px;
       font-family: inherit;
-      font-size: 16px;
+      font-size: 16.5px;
       font-weight: 700;
       color: var(--ink);
-      background: transparent;
+      background: #f8fafc;
       text-align: center;
       text-transform: uppercase;
-      padding: 2px 8px;
+      padding: 4px 10px;
+      transition: all 0.15s ease;
     }
 
     .college-input:focus {
       outline: none;
-      border-bottom-style: solid;
-      border-bottom-color: var(--accent);
-      background: var(--accent-soft);
+      border-color: var(--primary-mid);
+      background: var(--primary-soft);
     }
 
     .doc-title-line {
@@ -212,55 +305,54 @@
       font-size: 14px;
       font-weight: 700;
       text-transform: uppercase;
+      margin-top: 4px;
     }
 
     .sem-select {
-      border: none;
-      border-bottom: 1px dashed #64748b;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
       font-family: inherit;
       font-size: inherit;
       font-weight: 700;
-      color: inherit;
-      background: transparent;
+      color: var(--primary);
+      background: var(--primary-soft);
       text-align: center;
       text-align-last: center;
       text-transform: uppercase;
-      padding: 0 4px;
+      padding: 1px 8px;
       cursor: pointer;
     }
 
     .sem-select:focus {
       outline: none;
-      border-bottom-style: solid;
-      border-bottom-color: var(--accent);
-      background: var(--accent-soft);
+      border-color: var(--primary-mid);
     }
 
     .inline-input {
-      border: none;
-      border-bottom: 1px dashed #64748b;
+      border: 1px solid transparent;
+      border-bottom: 1.5px dashed #94a3b8;
+      border-radius: 5px;
       font-family: inherit;
       font-size: inherit;
       font-weight: inherit;
-      color: inherit;
-      background: transparent;
+      color: var(--primary);
+      background: #f8fafc;
       text-align: center;
-      padding: 0 4px;
+      padding: 1px 6px;
       text-transform: uppercase;
     }
 
     .inline-input:focus {
       outline: none;
-      border-bottom-style: solid;
-      border-bottom-color: var(--accent);
-      background: var(--accent-soft);
+      border-color: var(--primary-mid);
+      background: var(--primary-soft);
     }
 
     .doc-subtitle {
-      font-size: 15px;
+      font-size: 15.5px;
       font-weight: 700;
-      margin-top: 6px;
-      letter-spacing: 0.04em;
+      margin-top: 8px;
+      letter-spacing: 0.05em;
       text-decoration: underline;
     }
 
@@ -273,11 +365,13 @@
     .dept-oval {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      gap: 8px;
       border: 1.5px solid var(--print-line);
       border-radius: 999px;
-      padding: 4px 20px;
-      background: #f8fafc;
+      padding: 5px 24px;
+      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+      box-shadow: 0 2px 5px rgba(15, 23, 42, 0.05);
       font-size: 13px;
       font-weight: 700;
       max-width: 100%;
@@ -285,18 +379,20 @@
 
     .dept-oval label {
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .dept-oval-input {
       border: none;
-      border-bottom: 1px dotted #475569;
+      border-bottom: 1.5px dotted #64748b;
       background: transparent;
       font-family: inherit;
-      font-size: 13px;
+      font-size: 13.5px;
       font-weight: 700;
       text-transform: uppercase;
-      color: var(--ink);
-      min-width: 240px;
+      color: var(--primary);
+      width: 240px;
+      max-width: 65vw;
       text-align: center;
       padding: 1px 4px;
     }
@@ -304,15 +400,20 @@
     .dept-oval-input:focus {
       outline: none;
       border-bottom-style: solid;
-      border-bottom-color: var(--accent);
-      background: var(--accent-soft);
+      border-bottom-color: var(--primary-mid);
+      background: var(--primary-soft);
+      border-radius: 4px;
     }
 
     .meta-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+      gap: 14px;
       margin-bottom: 18px;
+      padding: 12px 14px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
       font-family: Cambria, "Times New Roman", serif;
       font-size: 13px;
       font-weight: 700;
@@ -333,24 +434,31 @@
       flex: 1;
       min-width: 0;
       border: none;
-      border-bottom: 1px dotted #334155;
+      border-bottom: 1.5px dotted #475569;
       font-family: inherit;
       font-size: 13px;
       font-weight: 700;
       text-transform: uppercase;
-      padding: 2px 6px;
+      padding: 3px 6px;
       background: transparent;
     }
 
     .meta-input:focus {
       outline: none;
       border-bottom-style: solid;
-      border-bottom-color: var(--accent);
-      background: var(--accent-soft);
+      border-bottom-color: var(--primary-mid);
+      background: #ffffff;
+      border-radius: 4px;
     }
 
+    /* Examiner Card Block */
     .examiner-block {
-      margin-bottom: 22px;
+      margin-bottom: 20px;
+      padding: 14px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
       font-family: Cambria, "Times New Roman", serif;
     }
 
@@ -360,7 +468,10 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      padding: 6px 10px;
+      background: var(--indigo-soft);
+      border-radius: 7px;
       font-weight: 700;
       font-size: 13px;
     }
@@ -370,14 +481,14 @@
       align-items: center;
       flex: 1;
       min-width: 240px;
-      gap: 6px;
+      gap: 8px;
     }
 
     .examiner-name-input {
       flex: 1;
       max-width: 440px;
       border: none;
-      border-bottom: 1px dotted #334155;
+      border-bottom: 1.5px dotted #334155;
       font-family: inherit;
       font-size: 13px;
       font-weight: 700;
@@ -389,8 +500,9 @@
     .examiner-name-input:focus {
       outline: none;
       border-bottom-style: solid;
-      border-bottom-color: var(--accent);
-      background: var(--accent-soft);
+      border-bottom-color: var(--primary-mid);
+      background: #ffffff;
+      border-radius: 4px;
     }
 
     .block-controls {
@@ -401,8 +513,26 @@
     .mini-btn {
       padding: 5px 10px;
       font-size: 12px;
-      border-radius: 5px;
-      font-family: "Segoe UI", sans-serif;
+      border-radius: 6px;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      background: #ffffff;
+      color: var(--ink);
+      border: 1px solid #cbd5e1;
+    }
+
+    .mini-btn:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    .mini-btn.danger {
+      color: var(--danger);
+      border-color: #fecaca;
+      background: var(--danger-soft);
+    }
+
+    .mini-btn.danger:hover {
+      background: #fee2e2;
     }
 
     .below-block-bar {
@@ -411,39 +541,41 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 7px;
+      margin-top: 9px;
     }
 
     .add-paper-btn {
-      border: 1px solid var(--accent);
-      background: var(--accent-soft);
-      color: var(--accent);
-      padding: 6px 12px;
+      border: 1px solid #93c5fd;
+      background: var(--primary-soft);
+      color: var(--primary);
+      padding: 6px 13px;
       font-size: 12px;
-      font-weight: 600;
-      border-radius: 6px;
-      font-family: "Segoe UI", sans-serif;
+      font-weight: 700;
+      border-radius: 7px;
+      font-family: "Plus Jakarta Sans", sans-serif;
     }
 
     .add-paper-btn:hover {
-      background: var(--accent);
+      background: var(--primary-mid);
+      border-color: var(--primary-mid);
       color: #ffffff;
     }
 
     .add-examiner-inline {
       border: 1px dashed #64748b;
       background: #f8fafc;
-      color: var(--accent);
-      padding: 6px 12px;
+      color: var(--ink);
+      padding: 6px 13px;
       font-size: 12px;
       font-weight: 600;
-      border-radius: 6px;
-      font-family: "Segoe UI", sans-serif;
+      border-radius: 7px;
+      font-family: "Plus Jakarta Sans", sans-serif;
     }
 
     .add-examiner-inline:hover {
-      background: var(--accent-soft);
-      border-color: var(--accent);
+      background: var(--indigo-soft);
+      border-color: var(--primary);
+      color: var(--primary);
     }
 
     .table-scroll {
@@ -465,24 +597,26 @@
       padding: 5px 6px;
       vertical-align: top;
       font-size: 12px;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
+      word-break: normal;
+      overflow-wrap: normal;
     }
 
     th {
-      background: #f8fafc;
+      background: #f1f5f9;
       font-weight: 700;
       text-align: center;
       font-size: 11px;
+      white-space: nowrap;
+      color: #0f172a;
     }
 
-    .col-sl { width: 6%; text-align: center; }
-    .col-course { width: 28%; }
-    .col-qp { width: 13%; }
-    .col-date { width: 13%; }
+    .col-sl { width: 7%; text-align: center; white-space: nowrap; font-weight: 600; }
+    .col-course { width: 31%; }
+    .col-qp { width: 11%; text-align: center; }
+    .col-date { width: 12%; text-align: center; }
     .col-fnan { width: 8%; text-align: center; }
     .col-reg { width: 17%; }
-    .col-count { width: 8%; }
+    .col-count { width: 7%; text-align: center; }
     .col-sign { width: 7%; text-align: center; }
 
     textarea.cell-input, input.cell-input {
@@ -493,15 +627,18 @@
       font-size: 12px;
       color: var(--ink);
       resize: none;
-      padding: 0;
+      padding: 1px 2px;
       margin: 0;
       display: block;
-      line-height: 1.35;
+      line-height: 1.32;
+      word-break: normal;
+      overflow-wrap: normal;
+      border-radius: 3px;
     }
 
     textarea.cell-input:focus, input.cell-input:focus {
       outline: none;
-      background: var(--accent-soft);
+      background: var(--primary-soft);
     }
 
     .center-input {
@@ -511,12 +648,13 @@
     .count-input {
       text-align: center;
       font-weight: 700;
+      color: var(--primary);
     }
 
     .field-invalid {
       outline: 2px solid var(--danger) !important;
       background: var(--danger-soft) !important;
-      border-radius: 3px;
+      border-radius: 4px;
     }
 
     .dept-oval.field-invalid {
@@ -534,11 +672,16 @@
       cursor: pointer;
     }
 
+    .row-del-btn:hover {
+      background: var(--danger-soft);
+      transform: none;
+    }
+
     .gross-row td {
       font-weight: 700;
-      font-size: 13px;
+      font-size: 12.5px;
       background: #f8fafc;
-      padding: 6px 8px;
+      padding: 5px 8px;
     }
 
     .gross-label {
@@ -548,11 +691,17 @@
 
     .gross-val {
       text-align: center;
-      font-size: 14px;
+      font-size: 13.5px;
+      color: var(--primary);
     }
 
+    /* Paper-Wise Summary */
     .paper-summary-section {
-      margin-top: 22px;
+      margin-top: 20px;
+      padding: 14px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
       font-family: Cambria, "Times New Roman", serif;
       break-inside: avoid;
     }
@@ -561,16 +710,18 @@
       font-size: 13px;
       font-weight: 700;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 7px;
       letter-spacing: 0.03em;
+      color: var(--primary);
     }
 
     .summary-table {
       min-width: 100%;
+      background: #ffffff;
     }
 
     .summary-table th {
-      background: #f8fafc;
+      background: #eef2ff;
       font-size: 11px;
       padding: 5px 8px;
     }
@@ -582,13 +733,13 @@
     }
 
     .sum-col-sl { width: 8%; text-align: center; }
-    .sum-col-course { width: 54%; }
-    .sum-col-qp { width: 20%; text-align: center; }
-    .sum-col-count { width: 18%; text-align: center; font-weight: 700; }
+    .sum-col-course { width: 58%; }
+    .sum-col-qp { width: 18%; text-align: center; }
+    .sum-col-count { width: 16%; text-align: center; font-weight: 700; color: var(--primary); }
 
     .footer-summary {
-      margin-top: 22px;
-      padding-top: 14px;
+      margin-top: 20px;
+      padding-top: 16px;
       border-top: 2px solid var(--print-line);
       font-family: Cambria, "Times New Roman", serif;
       display: flex;
@@ -601,38 +752,51 @@
 
     .grand-box {
       border: 1.5px solid var(--print-line);
-      padding: 8px 14px;
+      border-radius: 8px;
+      padding: 8px 16px;
       font-size: 14px;
       font-weight: 700;
-      background: #f8fafc;
+      background: var(--primary-soft);
+      color: var(--ink);
+    }
+
+    .grand-box span {
+      color: var(--primary);
+      font-size: 16px;
     }
 
     .sign-cols {
       display: flex;
-      gap: 40px;
+      gap: 44px;
       font-size: 12px;
       font-weight: 700;
     }
 
     .sign-line {
-      min-width: 180px;
+      min-width: 175px;
       text-align: center;
       border-top: 1px solid var(--print-line);
-      padding-top: 4px;
+      padding-top: 5px;
+    }
+
+    .req-star {
+      color: var(--danger);
     }
 
     .toast {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
+      bottom: 22px;
+      right: 22px;
       background: #0f172a;
       color: #ffffff;
-      padding: 10px 16px;
-      border-radius: 6px;
+      padding: 11px 18px;
+      border-radius: 10px;
       font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
       opacity: 0;
       pointer-events: none;
-      transform: translateY(8px);
+      transform: translateY(10px);
       transition: opacity 0.2s ease, transform 0.2s ease;
       z-index: 50;
     }
@@ -650,10 +814,14 @@
         grid-template-columns: 1fr;
       }
       .sheet {
-        padding: 14px 12px;
+        padding: 16px 12px;
+        border-radius: 10px;
+      }
+      .examiner-block {
+        padding: 10px;
       }
       .dept-oval {
-        padding: 4px 12px;
+        padding: 5px 14px;
         width: 100%;
         justify-content: center;
       }
@@ -681,17 +849,19 @@
       }
     }
 
+    /* COMPACT SINGLE-PAGE SAVING PRINT LAYOUT */
     @media print {
       @page {
         size: A4 portrait;
-        margin: 10mm;
+        margin: 6mm 7mm;
       }
 
       body {
-        background: #ffffff;
+        background: #ffffff !important;
+        line-height: 1.2;
       }
 
-      .topbar, .validation-banner, .kpi-grid, .block-controls, .below-block-bar, .row-del-btn, .toast, .no-print {
+      .topbar, .validation-banner, .kpi-grid, .block-controls, .below-block-bar, .row-del-btn, .toast, .no-print, .req-star {
         display: none !important;
       }
 
@@ -703,8 +873,128 @@
 
       .sheet {
         border: none;
+        border-radius: 0;
         box-shadow: none;
         padding: 0;
+        overflow: visible;
+      }
+
+      .sheet::before {
+        display: none !important;
+      }
+
+      .doc-header {
+        padding-bottom: 5px;
+        margin-bottom: 6px;
+        border-bottom-width: 1.5px;
+      }
+
+      .doc-college-wrap {
+        margin-bottom: 2px;
+      }
+
+      .college-input {
+        background: transparent !important;
+        border: none !important;
+        font-size: 13.5px !important;
+        color: #000000 !important;
+        padding: 0 !important;
+        outline: none !important;
+      }
+
+      .doc-title-line {
+        font-size: 11.5px !important;
+        gap: 4px;
+        margin-top: 0;
+      }
+
+      .sem-select {
+        appearance: none;
+        -webkit-appearance: none;
+        border: none !important;
+        background: transparent !important;
+        color: #000000 !important;
+        font-size: 11.5px !important;
+        padding: 0 !important;
+        outline: none !important;
+      }
+
+      .inline-input {
+        border: none !important;
+        background: transparent !important;
+        color: #000000 !important;
+        font-size: 11.5px !important;
+        padding: 0 !important;
+        width: auto !important;
+        outline: none !important;
+      }
+
+      .doc-subtitle {
+        font-size: 12.5px !important;
+        margin-top: 2px;
+      }
+
+      .dept-oval-wrap {
+        margin-top: 4px;
+      }
+
+      .dept-oval {
+        background: #ffffff !important;
+        box-shadow: none !important;
+        padding: 2px 16px !important;
+        font-size: 11px !important;
+        border-width: 1px;
+        display: inline-flex !important;
+        align-items: center !important;
+        width: auto !important;
+      }
+
+      .dept-oval-input {
+        border-bottom: none !important;
+        color: #000000 !important;
+        font-size: 11px !important;
+        padding: 0 !important;
+        width: auto !important;
+        min-width: 90px !important;
+        outline: none !important;
+      }
+
+      .meta-grid {
+        gap: 6px;
+        margin-bottom: 7px;
+        padding: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        font-size: 11px !important;
+      }
+
+      .meta-input {
+        font-size: 11px !important;
+        padding: 0 4px !important;
+        border-color: #000000 !important;
+        outline: none !important;
+      }
+
+      .examiner-block {
+        margin-bottom: 7px;
+        padding: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+      }
+
+      .examiner-bar {
+        margin-bottom: 2px;
+        padding: 0 !important;
+        background: transparent !important;
+        font-size: 11px !important;
+      }
+
+      .examiner-name-input {
+        font-size: 11px !important;
+        padding: 0 4px !important;
+        border-color: #000000 !important;
+        outline: none !important;
       }
 
       .table-scroll {
@@ -713,54 +1003,88 @@
 
       table {
         min-width: 100% !important;
+        border-width: 1px;
+      }
+
+      th, td {
+        padding: 2px 4px !important;
+        font-size: 10px !important;
+        line-height: 1.15 !important;
       }
 
       th, .summary-table th {
         background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 9.5px !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
 
-      .gross-row td, .grand-box, .dept-oval {
+      textarea.cell-input, input.cell-input {
+        background: transparent !important;
+        color: #000000 !important;
+        font-size: 10px !important;
+        line-height: 1.15 !important;
+        padding: 0 !important;
+        outline: none !important;
+      }
+
+      .gross-row td {
         background: #ffffff !important;
+        padding: 2px 5px !important;
+        font-size: 10.5px !important;
       }
 
-      .examiner-block {
-        break-inside: avoid;
+      .gross-val, .sum-col-count {
+        color: #000000 !important;
+        font-size: 11px !important;
       }
 
-      textarea.cell-input, input.cell-input, .inline-input, .meta-input, .examiner-name-input {
+      .paper-summary-section {
+        margin-top: 8px;
+        padding: 0 !important;
         background: transparent !important;
-        border-color: #000000 !important;
-        font-size: 12px !important;
-        outline: none !important;
+        border: none !important;
       }
 
-      .college-input {
-        background: transparent !important;
-        border-bottom: none !important;
-        font-size: 16px !important;
-        outline: none !important;
+      .paper-summary-title {
+        color: #000000 !important;
+        font-size: 10.5px !important;
+        margin-bottom: 2px;
       }
 
-      .sem-select {
-        appearance: none;
-        -webkit-appearance: none;
-        border-bottom: none !important;
-        font-size: 14px !important;
-        outline: none !important;
+      .summary-table th, .summary-table td {
+        padding: 2px 5px !important;
+        font-size: 10px !important;
       }
 
-      .inline-input {
-        border-bottom: none !important;
-        font-size: 14px !important;
-        outline: none !important;
+      .footer-summary {
+        margin-top: 10px;
+        padding-top: 8px;
+        border-top-width: 1.5px;
       }
 
-      .dept-oval-input {
-        border-bottom: none !important;
-        font-size: 13px !important;
-        outline: none !important;
+      .grand-box {
+        background: #ffffff !important;
+        border-radius: 0 !important;
+        padding: 4px 10px !important;
+        font-size: 11px !important;
+        border-width: 1px;
+      }
+
+      .grand-box span {
+        color: #000000 !important;
+        font-size: 11.5px !important;
+      }
+
+      .sign-cols {
+        font-size: 10.5px !important;
+        gap: 32px;
+      }
+
+      .sign-line {
+        min-width: 150px;
+        padding-top: 3px;
       }
     }
   </style>
@@ -768,15 +1092,25 @@
 <body>
   <header class="topbar">
     <div class="brand">
-      <h1>University Paper Issue Register</h1>
-      <p>Calicut University Odd Semester FYUGP Examinations</p>
+      <div class="brand-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+      </div>
+      <div>
+        <h1>University Paper Issue Register</h1>
+        <p>Calicut University Odd Semester FYUGP Examinations</p>
+      </div>
     </div>
     <div class="actions">
       <button type="button" onclick="addExaminerBlock()">+ Add Examiner</button>
       <button type="button" onclick="exportBackup()">Backup JSON</button>
       <label class="btn-label" for="restoreFile">Restore JSON</label>
       <input id="restoreFile" type="file" accept=".json,application/json" style="display:none" onchange="importBackup(event)" />
-      <button type="button" class="danger" onclick="clearRegister()">Clear All</button>
+      <button type="button" class="danger-top" onclick="clearRegister()">Clear All</button>
       <button type="button" class="primary" onclick="handlePrint()">Print / Save PDF</button>
     </div>
   </header>
@@ -785,28 +1119,48 @@
     <div class="validation-banner" id="validationBanner"></div>
 
     <section class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-label">Additional Examiners</div>
-        <div class="kpi-value" id="kpiExaminers">0</div>
+      <div class="kpi-card blue">
+        <div>
+          <div class="kpi-label">Additional Examiners</div>
+          <div class="kpi-value" id="kpiExaminers">0</div>
+        </div>
+        <div class="kpi-badge" aria-hidden="true">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Listed Papers</div>
-        <div class="kpi-value" id="kpiPapers">0</div>
+      <div class="kpi-card purple">
+        <div>
+          <div class="kpi-label">Listed Papers</div>
+          <div class="kpi-value" id="kpiPapers">0</div>
+        </div>
+        <div class="kpi-badge" aria-hidden="true">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Total Entry Rows</div>
-        <div class="kpi-value" id="kpiRows">0</div>
+      <div class="kpi-card amber">
+        <div>
+          <div class="kpi-label">Total Entry Rows</div>
+          <div class="kpi-value" id="kpiRows">0</div>
+        </div>
+        <div class="kpi-badge" aria-hidden="true">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Grand Total Papers</div>
-        <div class="kpi-value" id="kpiGrandTotal">0</div>
+      <div class="kpi-card emerald">
+        <div>
+          <div class="kpi-label">Grand Total Papers</div>
+          <div class="kpi-value" id="kpiGrandTotal">0</div>
+        </div>
+        <div class="kpi-badge" aria-hidden="true">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
       </div>
     </section>
 
     <section class="sheet" id="registerSheet">
       <div class="doc-header">
         <div class="doc-college-wrap">
-          <input class="college-input" id="collegeInput" placeholder="ENTER COLLEGE NAME & PLACE *" oninput="onMetaChange()" />
+          <input class="college-input" id="collegeInput" placeholder="ENTER COLLEGE NAME & PLACE" oninput="onMetaChange()" />
         </div>
         <div class="doc-title-line">
           <span>CALICUT UNIVERSITY</span>
@@ -817,24 +1171,24 @@
             <option value="SEVENTH">SEVENTH</option>
           </select>
           <span>SEMESTER FYUGP EXAMINATIONS</span>
-          <input class="inline-input" id="monthYearInput" style="width: 155px;" placeholder="NOVEMBER 2026 *" oninput="onMetaChange()" />
+          <input class="inline-input" id="monthYearInput" style="width: 145px;" placeholder="NOVEMBER 2026" oninput="onMetaChange()" />
         </div>
         <div class="doc-subtitle">UNIVERSITY PAPER ISSUE REGISTER</div>
         <div class="dept-oval-wrap">
           <div class="dept-oval" id="deptOval">
             <label for="deptInput">DEPARTMENT :</label>
-            <input class="dept-oval-input" id="deptInput" placeholder="ENTER DEPARTMENT NAME *" oninput="onMetaChange()" />
+            <input class="dept-oval-input" id="deptInput" placeholder="ENTER DEPARTMENT" oninput="onMetaChange(); adjustDeptInputWidth();" />
           </div>
         </div>
       </div>
 
       <div class="meta-grid">
         <div class="meta-row">
-          <label for="chairmanInput">NAME OF CHAIRMAN * :</label>
+          <label for="chairmanInput">NAME OF CHAIRMAN<span class="req-star"> *</span> :</label>
           <input class="meta-input" id="chairmanInput" placeholder="ENTER CHAIRMAN NAME" oninput="onMetaChange()" />
         </div>
         <div class="meta-row">
-          <label for="chiefInput">CHIEF EXAMINER * :</label>
+          <label for="chiefInput">CHIEF EXAMINER<span class="req-star"> *</span> :</label>
           <input class="meta-input" id="chiefInput" placeholder="ENTER CHIEF EXAMINER NAME" oninput="onMetaChange()" />
         </div>
       </div>
@@ -842,7 +1196,7 @@
       <div id="blocksContainer"></div>
 
       <div class="paper-summary-section" id="paperSummarySection" style="display:none;">
-        <div class="paper-summary-title">Paper-Wise Issue Summary (As Entered)</div>
+        <div class="paper-summary-title">Paper-Wise Issue Summary</div>
         <table class="summary-table">
           <thead>
             <tr>
@@ -871,7 +1225,7 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const STORAGE_KEY = "cu_fyugp_paper_issue_register_v7";
+    const STORAGE_KEY = "cu_fyugp_paper_issue_register_v9";
     const DEFAULT_COLLEGE = "MIC ARTS AND SCIENCE COLLEGE, ATHANIKKAL, VALLUVAMBRAM";
 
     function createEmptyRow() {
@@ -908,7 +1262,10 @@
 
     function loadState() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
+        const raw =
+          localStorage.getItem(STORAGE_KEY) ||
+          localStorage.getItem("cu_fyugp_paper_issue_register_v8") ||
+          localStorage.getItem("cu_fyugp_paper_issue_register_v7");
         if (!raw) return getDefaultState();
         const parsed = JSON.parse(raw);
         if (!Array.isArray(parsed.blocks) || parsed.blocks.length === 0) {
@@ -945,6 +1302,13 @@
       el.classList.add("show");
       clearTimeout(showToast._timer);
       showToast._timer = setTimeout(() => el.classList.remove("show"), 2400);
+    }
+
+    function adjustDeptInputWidth() {
+      const inp = document.getElementById("deptInput");
+      if (!inp) return;
+      const len = (inp.value || inp.placeholder || "").length;
+      inp.style.width = Math.max(14, len + 2) + "ch";
     }
 
     function parseMultiLineCount(val) {
@@ -1047,13 +1411,13 @@
         .replace(/"/g, "&quot;");
     }
 
-    function autoResizeTextarea(el) {
+    function autoResizeTextarea(el, minH = 22) {
       el.style.height = "auto";
-      el.style.height = Math.max(24, el.scrollHeight) + "px";
+      el.style.height = Math.max(minH, el.scrollHeight) + "px";
     }
 
-    function autoResizeAllTextareas() {
-      document.querySelectorAll("textarea.cell-input").forEach(autoResizeTextarea);
+    function autoResizeAllTextareas(minH = 22) {
+      document.querySelectorAll("textarea.cell-input").forEach((el) => autoResizeTextarea(el, minH));
     }
 
     function clearValidationHighlights() {
@@ -1284,11 +1648,16 @@
       const originalTitle = document.title;
       const deptSlug = sanitizeFilenamePart(state.department);
       document.title = `${deptSlug}_Paper_Issue_Register`;
+      autoResizeAllTextareas(14);
       window.print();
       setTimeout(() => {
         document.title = originalTitle;
+        autoResizeAllTextareas(22);
       }, 500);
     }
+
+    window.addEventListener("beforeprint", () => autoResizeAllTextareas(14));
+    window.addEventListener("afterprint", () => autoResizeAllTextareas(22));
 
     function render() {
       document.getElementById("collegeInput").value = state.college || "";
@@ -1297,6 +1666,7 @@
       document.getElementById("deptInput").value = state.department || "";
       document.getElementById("chairmanInput").value = state.chairman || "";
       document.getElementById("chiefInput").value = state.chiefExaminer || "";
+      adjustDeptInputWidth();
 
       const container = document.getElementById("blocksContainer");
       container.innerHTML = "";
@@ -1312,12 +1682,12 @@
         leftEl.className = "examiner-left";
 
         const labelEl = document.createElement("span");
-        labelEl.textContent = "ADDITIONAL * :";
+        labelEl.innerHTML = `ADDITIONAL<span class="req-star"> *</span> :`;
 
         const nameInput = document.createElement("input");
         nameInput.id = `examiner-name-${bIdx}`;
         nameInput.className = "examiner-name-input";
-        nameInput.placeholder = `${bIdx + 1}. ENTER ADDITIONAL EXAMINER NAME *`;
+        nameInput.placeholder = `${bIdx + 1}. ENTER ADDITIONAL EXAMINER NAME`;
         nameInput.value = block.examiner || "";
         nameInput.oninput = (e) => {
           state.blocks[bIdx].examiner = e.target.value;
@@ -1352,12 +1722,12 @@
           <thead>
             <tr>
               <th class="col-sl">SL. NO</th>
-              <th class="col-course">COURSE *</th>
-              <th class="col-qp">QP CODE *</th>
-              <th class="col-date">DATE *</th>
-              <th class="col-fnan">FN / AN *</th>
-              <th class="col-reg">REG. NO *</th>
-              <th class="col-count">COUNT *</th>
+              <th class="col-course">COURSE<span class="req-star"> *</span></th>
+              <th class="col-qp">QP CODE<span class="req-star"> *</span></th>
+              <th class="col-date">DATE<span class="req-star"> *</span></th>
+              <th class="col-fnan">FN / AN<span class="req-star"> *</span></th>
+              <th class="col-reg">REG. NO<span class="req-star"> *</span></th>
+              <th class="col-count">COUNT<span class="req-star"> *</span></th>
               <th class="col-sign">SIGN</th>
             </tr>
           </thead>
@@ -1384,7 +1754,7 @@
             ta.value = row[field] || "";
             ta.oninput = (e) => {
               state.blocks[bIdx].rows[rIdx][field] = e.target.value;
-              autoResizeTextarea(e.target);
+              autoResizeTextarea(e.target, 22);
               if (field === "count") {
                 updateTotalsOnly();
               } else if (field === "course" || field === "qpCode") {
@@ -1450,7 +1820,7 @@
       });
 
       updateTotalsOnly();
-      autoResizeAllTextareas();
+      autoResizeAllTextareas(22);
     }
 
     render();
