@@ -350,7 +350,7 @@
     }
 
     .examiner-block {
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       font-family: Cambria, "Times New Roman", serif;
     }
 
@@ -407,9 +407,27 @@
 
     .below-block-bar {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
       gap: 8px;
-      margin-top: 6px;
+      margin-top: 7px;
+    }
+
+    .add-paper-btn {
+      border: 1px solid var(--accent);
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 6px;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    .add-paper-btn:hover {
+      background: var(--accent);
+      color: #ffffff;
     }
 
     .add-examiner-inline {
@@ -560,6 +578,7 @@
     .summary-table td {
       font-size: 12px;
       padding: 5px 8px;
+      white-space: pre-line;
     }
 
     .sum-col-sl { width: 8%; text-align: center; }
@@ -771,7 +790,7 @@
         <div class="kpi-value" id="kpiExaminers">0</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Distinct Papers</div>
+        <div class="kpi-label">Listed Papers</div>
         <div class="kpi-value" id="kpiPapers">0</div>
       </div>
       <div class="kpi-card">
@@ -823,14 +842,14 @@
       <div id="blocksContainer"></div>
 
       <div class="paper-summary-section" id="paperSummarySection" style="display:none;">
-        <div class="paper-summary-title">Paper-Wise Issue Summary (Course / QP Code)</div>
+        <div class="paper-summary-title">Paper-Wise Issue Summary (As Entered)</div>
         <table class="summary-table">
           <thead>
             <tr>
               <th class="sum-col-sl">SL. NO</th>
               <th class="sum-col-course">COURSE / PAPER NAME</th>
               <th class="sum-col-qp">QP CODE</th>
-              <th class="sum-col-count">TOTAL COUNT</th>
+              <th class="sum-col-count">COUNT</th>
             </tr>
           </thead>
           <tbody id="paperSummaryBody"></tbody>
@@ -852,7 +871,7 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const STORAGE_KEY = "cu_fyugp_paper_issue_register_v5";
+    const STORAGE_KEY = "cu_fyugp_paper_issue_register_v7";
     const DEFAULT_COLLEGE = "MIC ARTS AND SCIENCE COLLEGE, ATHANIKKAL, VALLUVAMBRAM";
 
     function createEmptyRow() {
@@ -866,7 +885,7 @@
       };
     }
 
-    function createEmptyBlock(rowCount = 4) {
+    function createEmptyBlock(rowCount = 1) {
       return {
         examiner: "",
         rows: Array.from({ length: rowCount }, () => createEmptyRow())
@@ -882,22 +901,14 @@
         chairman: "",
         chiefExaminer: "",
         blocks: [
-          createEmptyBlock(4),
-          createEmptyBlock(4),
-          createEmptyBlock(4),
-          createEmptyBlock(4)
+          createEmptyBlock(1)
         ]
       };
     }
 
     function loadState() {
       try {
-        const raw =
-          localStorage.getItem(STORAGE_KEY) ||
-          localStorage.getItem("cu_fyugp_paper_issue_register_v4") ||
-          localStorage.getItem("cu_fyugp_paper_issue_register_v3") ||
-          localStorage.getItem("cu_fyugp_paper_issue_register_v2") ||
-          localStorage.getItem("mic_cu_fyugp_paper_issue_register_v1");
+        const raw = localStorage.getItem(STORAGE_KEY);
         if (!raw) return getDefaultState();
         const parsed = JSON.parse(raw);
         if (!Array.isArray(parsed.blocks) || parsed.blocks.length === 0) {
@@ -947,78 +958,50 @@
       return block.rows.reduce((sum, r) => sum + parseMultiLineCount(r.count), 0);
     }
 
-    function normalizeSinglePaperText(raw) {
-      if (!raw) return "";
-      return String(raw)
-        .replace(/\r?\n+/g, " ")
-        .replace(/\s+/g, " ")
-        .trim()
-        .toUpperCase();
-    }
-
-    function splitPaperLines(raw) {
-      if (!raw) return [];
-      const lines = String(raw)
-        .split(/\r?\n/)
-        .map((s) => s.replace(/\s+/g, " ").trim().toUpperCase())
-        .filter(Boolean);
-
-      if (lines.length <= 1) return lines;
-
-      const merged = [];
-      for (const line of lines) {
-        const prev = merged[merged.length - 1];
-        const looksLikeNewCode = /^[A-Z]{2,6}\d[A-Z0-9]{2,8}$/.test(line) || /^D\d{5,7}$/.test(line);
-        const prevEndsWithCode = prev && (/^[A-Z]{2,6}\d[A-Z0-9]{2,8}$/.test(prev) || /^D\d{5,7}$/.test(prev));
-        const looksLikeContinuation = prev && prev.length < 48 && !looksLikeNewCode && !prevEndsWithCode;
-
-        if (looksLikeContinuation) {
-          merged[merged.length - 1] = `${prev} ${line}`.replace(/\s+/g, " ").trim();
-        } else {
-          merged.push(line);
-        }
-      }
-      return merged;
-    }
-
-    function computePaperBreakdown() {
-      const map = new Map();
+    function buildListedPapers() {
+      const list = [];
 
       state.blocks.forEach((block) => {
         block.rows.forEach((row) => {
-          const courseItems = splitPaperLines(row.course);
-          const qpItems = splitPaperLines(row.qpCode);
-          const countLines = (row.count || "").split(/\r?\n/).map((s) => s.trim()).filter(Boolean);
+          const courseVal = (row.course || "").trim().toUpperCase();
+          const qpVal = (row.qpCode || "").trim().toUpperCase();
+          const countVal = (row.count || "").trim();
 
-          const numItems = Math.max(courseItems.length, qpItems.length);
-          if (numItems === 0) return;
+          if (!courseVal && !qpVal && !countVal) return;
 
-          if (numItems === 1) {
-            const cName = courseItems[0] || "UNSPECIFIED COURSE";
-            const qCode = qpItems[0] || "—";
-            const cnt = parseMultiLineCount(row.count);
-            const key = `${cName}||${qCode}`;
-            if (!map.has(key)) map.set(key, { course: cName, qpCode: qCode, count: 0 });
-            map.get(key).count += cnt;
-            return;
-          }
+          const cLines = (row.course || "").split(/\r?\n/).map((s) => s.trim().toUpperCase()).filter(Boolean);
+          const qLines = (row.qpCode || "").split(/\r?\n/).map((s) => s.trim().toUpperCase()).filter(Boolean);
+          const nLines = (row.count || "").split(/\r?\n/).map((s) => s.trim()).filter(Boolean);
 
-          for (let i = 0; i < numItems; i++) {
-            const cName = courseItems[i] || courseItems[0] || "UNSPECIFIED COURSE";
-            const qCode = qpItems[i] || qpItems[0] || "—";
-            const cnt = countLines[i] ? parseMultiLineCount(countLines[i]) : 0;
-            const key = `${cName}||${qCode}`;
-            if (!map.has(key)) map.set(key, { course: cName, qpCode: qCode, count: 0 });
-            map.get(key).count += cnt;
+          const maxLen = Math.max(cLines.length, qLines.length, nLines.length, 1);
+          if (maxLen === 1) {
+            list.push({
+              course: courseVal || "—",
+              qpCode: qpVal || "—",
+              count: parseMultiLineCount(countVal)
+            });
+          } else {
+            for (let i = 0; i < maxLen; i++) {
+              const cItem = cLines[i] !== undefined ? cLines[i] : (i === 0 ? "—" : "");
+              const qItem = qLines[i] !== undefined ? qLines[i] : (i === 0 ? "—" : "");
+              const nItem = nLines[i] !== undefined ? parseMultiLineCount(nLines[i]) : 0;
+              if (cItem || qItem || nLines[i] !== undefined) {
+                list.push({
+                  course: cItem || "—",
+                  qpCode: qItem || "—",
+                  count: nItem
+                });
+              }
+            }
           }
         });
       });
 
-      return Array.from(map.values());
+      return list;
     }
 
     function renderPaperSummary() {
-      const items = computePaperBreakdown();
+      const items = buildListedPapers();
       const section = document.getElementById("paperSummarySection");
       const tbody = document.getElementById("paperSummaryBody");
       const kpiPapers = document.getElementById("kpiPapers");
@@ -1050,7 +1033,7 @@
       const totalTr = document.createElement("tr");
       totalTr.className = "gross-row";
       totalTr.innerHTML = `
-        <td colspan="3" class="gross-label">TOTAL PAPERS (ALL COURSES) :</td>
+        <td colspan="3" class="gross-label">TOTAL PAPERS :</td>
         <td class="gross-val">${summaryTotal}</td>
       `;
       tbody.appendChild(totalTr);
@@ -1198,9 +1181,9 @@
 
     function addExaminerBlock(afterIdx = null) {
       if (afterIdx === null || afterIdx === undefined) {
-        state.blocks.push(createEmptyBlock(4));
+        state.blocks.push(createEmptyBlock(1));
       } else {
-        state.blocks.splice(afterIdx + 1, 0, createEmptyBlock(4));
+        state.blocks.splice(afterIdx + 1, 0, createEmptyBlock(1));
       }
       saveState();
       render();
@@ -1222,6 +1205,7 @@
       state.blocks[bIdx].rows.push(createEmptyRow());
       saveState();
       render();
+      showToast("Added paper row");
     }
 
     function removeRow(bIdx, rIdx) {
@@ -1345,11 +1329,11 @@
         const ctrlEl = document.createElement("div");
         ctrlEl.className = "block-controls";
 
-        const addRowBtn = document.createElement("button");
-        addRowBtn.type = "button";
-        addRowBtn.className = "mini-btn";
-        addRowBtn.textContent = "+ Row";
-        addRowBtn.onclick = () => addRow(bIdx);
+        const addRowTopBtn = document.createElement("button");
+        addRowTopBtn.type = "button";
+        addRowTopBtn.className = "mini-btn";
+        addRowTopBtn.textContent = "+ Add Paper Details";
+        addRowTopBtn.onclick = () => addRow(bIdx);
 
         const delBlockBtn = document.createElement("button");
         delBlockBtn.type = "button";
@@ -1357,7 +1341,7 @@
         delBlockBtn.textContent = "Remove";
         delBlockBtn.onclick = () => removeExaminerBlock(bIdx);
 
-        ctrlEl.append(addRowBtn, delBlockBtn);
+        ctrlEl.append(addRowTopBtn, delBlockBtn);
         barEl.append(leftEl, ctrlEl);
 
         const scrollWrap = document.createElement("div");
@@ -1447,13 +1431,19 @@
         const belowBar = document.createElement("div");
         belowBar.className = "below-block-bar";
 
-        const addBelowBtn = document.createElement("button");
-        addBelowBtn.type = "button";
-        addBelowBtn.className = "add-examiner-inline";
-        addBelowBtn.textContent = "+ Add Additional Examiner";
-        addBelowBtn.onclick = () => addExaminerBlock(bIdx);
+        const addPaperBelowBtn = document.createElement("button");
+        addPaperBelowBtn.type = "button";
+        addPaperBelowBtn.className = "add-paper-btn";
+        addPaperBelowBtn.textContent = "+ Add Paper Details";
+        addPaperBelowBtn.onclick = () => addRow(bIdx);
 
-        belowBar.appendChild(addBelowBtn);
+        const addExaminerBelowBtn = document.createElement("button");
+        addExaminerBelowBtn.type = "button";
+        addExaminerBelowBtn.className = "add-examiner-inline";
+        addExaminerBelowBtn.textContent = "+ Add Additional Examiner";
+        addExaminerBelowBtn.onclick = () => addExaminerBlock(bIdx);
+
+        belowBar.append(addPaperBelowBtn, addExaminerBelowBtn);
 
         blockEl.append(barEl, scrollWrap, belowBar);
         container.appendChild(blockEl);
