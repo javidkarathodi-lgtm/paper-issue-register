@@ -13,6 +13,8 @@
       --border: #cbd5e1;
       --accent: #1e3a8a;
       --accent-soft: #eff6ff;
+      --danger: #dc2626;
+      --danger-soft: #fef2f2;
       --print-line: #000000;
     }
 
@@ -105,6 +107,27 @@
       max-width: 1050px;
       margin: 20px auto 48px;
       padding: 0 16px;
+    }
+
+    .validation-banner {
+      display: none;
+      background: var(--danger-soft);
+      border: 1px solid #fca5a5;
+      color: #991b1b;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .validation-banner.show {
+      display: block;
+    }
+
+    .validation-banner ul {
+      margin: 6px 0 0 18px;
+      padding: 0;
     }
 
     .kpi-grid {
@@ -472,6 +495,17 @@
       font-weight: 700;
     }
 
+    .field-invalid {
+      outline: 2px solid var(--danger) !important;
+      background: var(--danger-soft) !important;
+      border-radius: 3px;
+    }
+
+    .dept-oval.field-invalid {
+      border-color: var(--danger) !important;
+      outline: 2px solid var(--danger) !important;
+    }
+
     .row-del-btn {
       border: none;
       background: transparent;
@@ -499,7 +533,6 @@
       font-size: 14px;
     }
 
-    /* Paper-wise Summary Section */
     .paper-summary-section {
       margin-top: 22px;
       font-family: Cambria, "Times New Roman", serif;
@@ -639,7 +672,7 @@
         background: #ffffff;
       }
 
-      .topbar, .kpi-grid, .block-controls, .below-block-bar, .row-del-btn, .toast, .no-print {
+      .topbar, .validation-banner, .kpi-grid, .block-controls, .below-block-bar, .row-del-btn, .toast, .no-print {
         display: none !important;
       }
 
@@ -681,12 +714,14 @@
         background: transparent !important;
         border-color: #000000 !important;
         font-size: 12px !important;
+        outline: none !important;
       }
 
       .college-input {
         background: transparent !important;
         border-bottom: none !important;
         font-size: 16px !important;
+        outline: none !important;
       }
 
       .sem-select {
@@ -694,16 +729,19 @@
         -webkit-appearance: none;
         border-bottom: none !important;
         font-size: 14px !important;
+        outline: none !important;
       }
 
       .inline-input {
         border-bottom: none !important;
         font-size: 14px !important;
+        outline: none !important;
       }
 
       .dept-oval-input {
         border-bottom: none !important;
         font-size: 13px !important;
+        outline: none !important;
       }
     }
   </style>
@@ -725,6 +763,8 @@
   </header>
 
   <main class="container">
+    <div class="validation-banner" id="validationBanner"></div>
+
     <section class="kpi-grid">
       <div class="kpi-card">
         <div class="kpi-label">Additional Examiners</div>
@@ -747,7 +787,7 @@
     <section class="sheet" id="registerSheet">
       <div class="doc-header">
         <div class="doc-college-wrap">
-          <input class="college-input" id="collegeInput" placeholder="ENTER COLLEGE NAME & PLACE" oninput="onMetaChange()" />
+          <input class="college-input" id="collegeInput" placeholder="ENTER COLLEGE NAME & PLACE *" oninput="onMetaChange()" />
         </div>
         <div class="doc-title-line">
           <span>CALICUT UNIVERSITY</span>
@@ -758,31 +798,30 @@
             <option value="SEVENTH">SEVENTH</option>
           </select>
           <span>SEMESTER FYUGP EXAMINATIONS</span>
-          <input class="inline-input" id="monthYearInput" style="width: 155px;" placeholder="NOVEMBER 2026" oninput="onMetaChange()" />
+          <input class="inline-input" id="monthYearInput" style="width: 155px;" placeholder="NOVEMBER 2026 *" oninput="onMetaChange()" />
         </div>
         <div class="doc-subtitle">UNIVERSITY PAPER ISSUE REGISTER</div>
         <div class="dept-oval-wrap">
-          <div class="dept-oval">
+          <div class="dept-oval" id="deptOval">
             <label for="deptInput">DEPARTMENT :</label>
-            <input class="dept-oval-input" id="deptInput" placeholder="ENTER DEPARTMENT NAME" oninput="onMetaChange()" />
+            <input class="dept-oval-input" id="deptInput" placeholder="ENTER DEPARTMENT NAME *" oninput="onMetaChange()" />
           </div>
         </div>
       </div>
 
       <div class="meta-grid">
         <div class="meta-row">
-          <label for="chairmanInput">NAME OF CHAIRMAN :</label>
+          <label for="chairmanInput">NAME OF CHAIRMAN * :</label>
           <input class="meta-input" id="chairmanInput" placeholder="ENTER CHAIRMAN NAME" oninput="onMetaChange()" />
         </div>
         <div class="meta-row">
-          <label for="chiefInput">CHIEF EXAMINER :</label>
+          <label for="chiefInput">CHIEF EXAMINER * :</label>
           <input class="meta-input" id="chiefInput" placeholder="ENTER CHIEF EXAMINER NAME" oninput="onMetaChange()" />
         </div>
       </div>
 
       <div id="blocksContainer"></div>
 
-      <!-- Course / QP Code Wise Separate Count Summary -->
       <div class="paper-summary-section" id="paperSummarySection" style="display:none;">
         <div class="paper-summary-title">Paper-Wise Issue Summary (Course / QP Code)</div>
         <table class="summary-table">
@@ -813,7 +852,7 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const STORAGE_KEY = "cu_fyugp_paper_issue_register_v4";
+    const STORAGE_KEY = "cu_fyugp_paper_issue_register_v5";
     const DEFAULT_COLLEGE = "MIC ARTS AND SCIENCE COLLEGE, ATHANIKKAL, VALLUVAMBRAM";
 
     function createEmptyRow() {
@@ -855,6 +894,7 @@
       try {
         const raw =
           localStorage.getItem(STORAGE_KEY) ||
+          localStorage.getItem("cu_fyugp_paper_issue_register_v4") ||
           localStorage.getItem("cu_fyugp_paper_issue_register_v3") ||
           localStorage.getItem("cu_fyugp_paper_issue_register_v2") ||
           localStorage.getItem("mic_cu_fyugp_paper_issue_register_v1");
@@ -893,7 +933,7 @@
       el.textContent = message;
       el.classList.add("show");
       clearTimeout(showToast._timer);
-      showToast._timer = setTimeout(() => el.classList.remove("show"), 2200);
+      showToast._timer = setTimeout(() => el.classList.remove("show"), 2400);
     }
 
     function parseMultiLineCount(val) {
@@ -907,50 +947,68 @@
       return block.rows.reduce((sum, r) => sum + parseMultiLineCount(r.count), 0);
     }
 
+    function normalizeSinglePaperText(raw) {
+      if (!raw) return "";
+      return String(raw)
+        .replace(/\r?\n+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toUpperCase();
+    }
+
+    function splitPaperLines(raw) {
+      if (!raw) return [];
+      const lines = String(raw)
+        .split(/\r?\n/)
+        .map((s) => s.replace(/\s+/g, " ").trim().toUpperCase())
+        .filter(Boolean);
+
+      if (lines.length <= 1) return lines;
+
+      const merged = [];
+      for (const line of lines) {
+        const prev = merged[merged.length - 1];
+        const looksLikeNewCode = /^[A-Z]{2,6}\d[A-Z0-9]{2,8}$/.test(line) || /^D\d{5,7}$/.test(line);
+        const prevEndsWithCode = prev && (/^[A-Z]{2,6}\d[A-Z0-9]{2,8}$/.test(prev) || /^D\d{5,7}$/.test(prev));
+        const looksLikeContinuation = prev && prev.length < 48 && !looksLikeNewCode && !prevEndsWithCode;
+
+        if (looksLikeContinuation) {
+          merged[merged.length - 1] = `${prev} ${line}`.replace(/\s+/g, " ").trim();
+        } else {
+          merged.push(line);
+        }
+      }
+      return merged;
+    }
+
     function computePaperBreakdown() {
       const map = new Map();
 
       state.blocks.forEach((block) => {
         block.rows.forEach((row) => {
-          const courseLines = (row.course || "").split(/\r?\n/).map((s) => s.trim()).filter(Boolean);
-          const qpLines = (row.qpCode || "").split(/\r?\n/).map((s) => s.trim()).filter(Boolean);
+          const courseItems = splitPaperLines(row.course);
+          const qpItems = splitPaperLines(row.qpCode);
           const countLines = (row.count || "").split(/\r?\n/).map((s) => s.trim()).filter(Boolean);
 
-          const numItems = Math.max(courseLines.length, qpLines.length, countLines.length);
+          const numItems = Math.max(courseItems.length, qpItems.length);
           if (numItems === 0) return;
 
-          // If multiple courses/QPs share a single count line, attach full count to combined entry
-          if (countLines.length === 1 && (courseLines.length > 1 || qpLines.length > 1)) {
-            const cName = courseLines.join(" / ").toUpperCase() || "UNSPECIFIED COURSE";
-            const qCode = qpLines.join(" / ").toUpperCase() || "—";
-            const cnt = parseMultiLineCount(countLines[0]);
-            if (cnt > 0 || courseLines.length > 0 || qpLines.length > 0) {
-              const key = `${cName}||${qCode}`;
-              if (!map.has(key)) map.set(key, { course: cName, qpCode: qCode, count: 0 });
-              map.get(key).count += cnt;
-            }
+          if (numItems === 1) {
+            const cName = courseItems[0] || "UNSPECIFIED COURSE";
+            const qCode = qpItems[0] || "—";
+            const cnt = parseMultiLineCount(row.count);
+            const key = `${cName}||${qCode}`;
+            if (!map.has(key)) map.set(key, { course: cName, qpCode: qCode, count: 0 });
+            map.get(key).count += cnt;
             return;
           }
 
           for (let i = 0; i < numItems; i++) {
-            const rawCourse = courseLines[i] || (courseLines.length === 1 ? courseLines[0] : "");
-            const rawQp = qpLines[i] || (qpLines.length === 1 ? qpLines[0] : "");
-            const rawCount = countLines[i] || "";
-
-            const cName = rawCourse.toUpperCase() || (rawQp ? "UNSPECIFIED COURSE" : "");
-            const qCode = rawQp.toUpperCase() || "—";
-            const cnt = parseMultiLineCount(rawCount);
-
-            if (!cName && cnt === 0) continue;
-
-            const key = `${cName || "UNSPECIFIED COURSE"}||${qCode}`;
-            if (!map.has(key)) {
-              map.set(key, {
-                course: cName || "UNSPECIFIED COURSE",
-                qpCode: qCode,
-                count: 0
-              });
-            }
+            const cName = courseItems[i] || courseItems[0] || "UNSPECIFIED COURSE";
+            const qCode = qpItems[i] || qpItems[0] || "—";
+            const cnt = countLines[i] ? parseMultiLineCount(countLines[i]) : 0;
+            const key = `${cName}||${qCode}`;
+            if (!map.has(key)) map.set(key, { course: cName, qpCode: qCode, count: 0 });
             map.get(key).count += cnt;
           }
         });
@@ -1013,6 +1071,100 @@
 
     function autoResizeAllTextareas() {
       document.querySelectorAll("textarea.cell-input").forEach(autoResizeTextarea);
+    }
+
+    function clearValidationHighlights() {
+      document.querySelectorAll(".field-invalid").forEach((el) => el.classList.remove("field-invalid"));
+      const banner = document.getElementById("validationBanner");
+      banner.classList.remove("show");
+      banner.innerHTML = "";
+    }
+
+    function validateRegister() {
+      clearValidationHighlights();
+      const errors = [];
+
+      const collegeEl = document.getElementById("collegeInput");
+      const semEl = document.getElementById("semInput");
+      const monthYearEl = document.getElementById("monthYearInput");
+      const deptEl = document.getElementById("deptInput");
+      const deptOvalEl = document.getElementById("deptOval");
+      const chairmanEl = document.getElementById("chairmanInput");
+      const chiefEl = document.getElementById("chiefInput");
+
+      if (!state.college || !state.college.trim()) {
+        collegeEl.classList.add("field-invalid");
+        errors.push("College Name & Place is required.");
+      }
+      if (!state.semester || !state.semester.trim()) {
+        semEl.classList.add("field-invalid");
+        errors.push("Semester is required.");
+      }
+      if (!state.monthYear || !state.monthYear.trim()) {
+        monthYearEl.classList.add("field-invalid");
+        errors.push("Examination Month & Year is required.");
+      }
+      if (!state.department || !state.department.trim()) {
+        deptEl.classList.add("field-invalid");
+        deptOvalEl.classList.add("field-invalid");
+        errors.push("Department is required.");
+      }
+      if (!state.chairman || !state.chairman.trim()) {
+        chairmanEl.classList.add("field-invalid");
+        errors.push("Name of Chairman is required.");
+      }
+      if (!state.chiefExaminer || !state.chiefExaminer.trim()) {
+        chiefEl.classList.add("field-invalid");
+        errors.push("Chief Examiner is required.");
+      }
+
+      state.blocks.forEach((block, bIdx) => {
+        const nameEl = document.getElementById(`examiner-name-${bIdx}`);
+        if (!block.examiner || !block.examiner.trim()) {
+          if (nameEl) nameEl.classList.add("field-invalid");
+          errors.push(`Additional Examiner #${bIdx + 1}: Examiner name is required.`);
+        }
+
+        block.rows.forEach((row, rIdx) => {
+          const fields = [
+            { key: "course", label: "Course" },
+            { key: "qpCode", label: "QP Code" },
+            { key: "date", label: "Date" },
+            { key: "fnAn", label: "FN / AN" },
+            { key: "regNo", label: "Reg. No" },
+            { key: "count", label: "Count" }
+          ];
+
+          const hasAnyValue = fields.some((f) => (row[f.key] || "").trim() !== "");
+          const isFirstRowOfFirstBlock = bIdx === 0 && rIdx === 0;
+
+          if (hasAnyValue || isFirstRowOfFirstBlock) {
+            fields.forEach((f) => {
+              if (!row[f.key] || !row[f.key].trim()) {
+                const cellEl = document.getElementById(`cell-${bIdx}-${rIdx}-${f.key}`);
+                if (cellEl) cellEl.classList.add("field-invalid");
+                errors.push(`Examiner #${bIdx + 1}, Row ${rIdx + 1}: ${f.label} is required.`);
+              }
+            });
+          }
+        });
+      });
+
+      if (errors.length > 0) {
+        const banner = document.getElementById("validationBanner");
+        const shown = errors.slice(0, 8);
+        const extra = errors.length > 8 ? `<li>...and ${errors.length - 8} more mandatory field(s).</li>` : "";
+        banner.innerHTML = `
+          <div>Please fill all mandatory fields before proceeding:</div>
+          <ul>${shown.map((e) => `<li>${escapeHtml(e)}</li>`).join("")}${extra}</ul>
+        `;
+        banner.classList.add("show");
+        banner.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        showToast("Please complete all mandatory fields");
+        return false;
+      }
+
+      return true;
     }
 
     function onMetaChange() {
@@ -1086,6 +1238,7 @@
       if (!confirm("Clear all entered register data?")) return;
       state = getDefaultState();
       saveState();
+      clearValidationHighlights();
       render();
       showToast("Register cleared");
     }
@@ -1099,6 +1252,8 @@
     }
 
     function exportBackup() {
+      if (!validateRegister()) return;
+
       const deptSlug = sanitizeFilenamePart(state.department);
       const dateStr = new Date().toISOString().slice(0, 10);
       const filename = `${deptSlug}_Paper_Issue_Register_${dateStr}.json`;
@@ -1128,6 +1283,7 @@
             ...parsed
           };
           saveState();
+          clearValidationHighlights();
           render();
           showToast("Backup restored successfully");
         } catch {
@@ -1139,6 +1295,8 @@
     }
 
     function handlePrint() {
+      if (!validateRegister()) return;
+
       const originalTitle = document.title;
       const deptSlug = sanitizeFilenamePart(state.department);
       document.title = `${deptSlug}_Paper_Issue_Register`;
@@ -1170,11 +1328,12 @@
         leftEl.className = "examiner-left";
 
         const labelEl = document.createElement("span");
-        labelEl.textContent = "ADDITIONAL :";
+        labelEl.textContent = "ADDITIONAL * :";
 
         const nameInput = document.createElement("input");
+        nameInput.id = `examiner-name-${bIdx}`;
         nameInput.className = "examiner-name-input";
-        nameInput.placeholder = `${bIdx + 1}. ENTER ADDITIONAL EXAMINER NAME`;
+        nameInput.placeholder = `${bIdx + 1}. ENTER ADDITIONAL EXAMINER NAME *`;
         nameInput.value = block.examiner || "";
         nameInput.oninput = (e) => {
           state.blocks[bIdx].examiner = e.target.value;
@@ -1209,12 +1368,12 @@
           <thead>
             <tr>
               <th class="col-sl">SL. NO</th>
-              <th class="col-course">COURSE</th>
-              <th class="col-qp">QP CODE</th>
-              <th class="col-date">DATE</th>
-              <th class="col-fnan">FN / AN</th>
-              <th class="col-reg">REG. NO</th>
-              <th class="col-count">COUNT</th>
+              <th class="col-course">COURSE *</th>
+              <th class="col-qp">QP CODE *</th>
+              <th class="col-date">DATE *</th>
+              <th class="col-fnan">FN / AN *</th>
+              <th class="col-reg">REG. NO *</th>
+              <th class="col-count">COUNT *</th>
               <th class="col-sign">SIGN</th>
             </tr>
           </thead>
@@ -1234,6 +1393,7 @@
             const td = document.createElement("td");
             td.className = colClass;
             const ta = document.createElement("textarea");
+            ta.id = `cell-${bIdx}-${rIdx}-${field}`;
             ta.className = `cell-input ${extraClass}`.trim();
             ta.rows = 1;
             ta.placeholder = placeholder;
@@ -1252,11 +1412,11 @@
             return td;
           };
 
-          const courseTd = makeTextareaTd("course", "col-course", "", "Course name(s)");
-          const qpTd = makeTextareaTd("qpCode", "col-qp", "center-input", "QP code(s)");
+          const courseTd = makeTextareaTd("course", "col-course", "", "Course name");
+          const qpTd = makeTextareaTd("qpCode", "col-qp", "center-input", "QP code");
           const dateTd = makeTextareaTd("date", "col-date", "center-input", "DD-MM-YYYY");
           const fnAnTd = makeTextareaTd("fnAn", "col-fnan", "center-input", "FN/AN");
-          const regTd = makeTextareaTd("regNo", "col-reg", "", "Reg. no range(s)");
+          const regTd = makeTextareaTd("regNo", "col-reg", "", "Reg. no range");
           const countTd = makeTextareaTd("count", "col-count", "count-input", "0");
 
           const signTd = document.createElement("td");
