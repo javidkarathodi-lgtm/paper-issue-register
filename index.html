@@ -68,7 +68,7 @@
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--ink);
-      padding: 8px 12px;
+      padding: 9px 13px;
       border-radius: 6px;
       font-size: 13px;
       font-weight: 600;
@@ -109,7 +109,7 @@
 
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
       margin-bottom: 16px;
     }
@@ -147,19 +147,70 @@
     .doc-header {
       text-align: center;
       border-bottom: 2px solid var(--print-line);
-      padding-bottom: 10px;
+      padding-bottom: 12px;
       margin-bottom: 14px;
       font-family: Cambria, "Times New Roman", serif;
+    }
+
+    .doc-college-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 5px;
+    }
+
+    .college-input {
+      width: 100%;
+      max-width: 760px;
+      border: none;
+      border-bottom: 1px dashed #64748b;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+      background: transparent;
+      text-align: center;
+      text-transform: uppercase;
+      padding: 2px 8px;
+    }
+
+    .college-input:focus {
+      outline: none;
+      border-bottom-style: solid;
+      border-bottom-color: var(--accent);
+      background: var(--accent-soft);
     }
 
     .doc-title-line {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      align-items: center;
       gap: 6px;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       text-transform: uppercase;
+    }
+
+    .sem-select {
+      border: none;
+      border-bottom: 1px dashed #64748b;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: 700;
+      color: inherit;
+      background: transparent;
+      text-align: center;
+      text-align-last: center;
+      text-transform: uppercase;
+      padding: 0 4px;
+      cursor: pointer;
+    }
+
+    .sem-select:focus {
+      outline: none;
+      border-bottom-style: solid;
+      border-bottom-color: var(--accent);
+      background: var(--accent-soft);
     }
 
     .inline-input {
@@ -183,34 +234,51 @@
     }
 
     .doc-subtitle {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
-      margin-top: 4px;
-      letter-spacing: 0.03em;
+      margin-top: 6px;
+      letter-spacing: 0.04em;
+      text-decoration: underline;
     }
 
-    .doc-college-wrap {
-      margin-top: 5px;
+    .dept-oval-wrap {
       display: flex;
       justify-content: center;
+      margin-top: 10px;
     }
 
-    .college-input {
-      width: 100%;
-      max-width: 680px;
-      border: none;
-      border-bottom: 1px dashed #64748b;
-      font-family: inherit;
-      font-size: 14px;
+    .dept-oval {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1.5px solid var(--print-line);
+      border-radius: 999px;
+      padding: 4px 20px;
+      background: #f8fafc;
+      font-size: 13px;
       font-weight: 700;
-      color: var(--ink);
-      background: transparent;
-      text-align: center;
-      text-transform: uppercase;
-      padding: 2px 8px;
+      max-width: 100%;
     }
 
-    .college-input:focus {
+    .dept-oval label {
+      white-space: nowrap;
+    }
+
+    .dept-oval-input {
+      border: none;
+      border-bottom: 1px dotted #475569;
+      background: transparent;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--ink);
+      min-width: 240px;
+      text-align: center;
+      padding: 1px 4px;
+    }
+
+    .dept-oval-input:focus {
       outline: none;
       border-bottom-style: solid;
       border-bottom-color: var(--accent);
@@ -219,9 +287,9 @@
 
     .meta-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-      margin-bottom: 16px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
       font-family: Cambria, "Times New Roman", serif;
       font-size: 13px;
       font-weight: 700;
@@ -234,12 +302,13 @@
     }
 
     .meta-row label {
-      min-width: 155px;
+      white-space: nowrap;
       text-transform: uppercase;
     }
 
     .meta-input {
       flex: 1;
+      min-width: 0;
       border: none;
       border-bottom: 1px dotted #334155;
       font-family: inherit;
@@ -266,6 +335,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
       gap: 8px;
       margin-bottom: 6px;
       font-weight: 700;
@@ -276,12 +346,13 @@
       display: flex;
       align-items: center;
       flex: 1;
+      min-width: 240px;
       gap: 6px;
     }
 
     .examiner-name-input {
       flex: 1;
-      max-width: 420px;
+      max-width: 440px;
       border: none;
       border-bottom: 1px dotted #334155;
       font-family: inherit;
@@ -301,18 +372,48 @@
 
     .block-controls {
       display: flex;
-      gap: 4px;
+      gap: 6px;
     }
 
     .mini-btn {
-      padding: 3px 8px;
-      font-size: 11px;
-      border-radius: 4px;
+      padding: 5px 10px;
+      font-size: 12px;
+      border-radius: 5px;
       font-family: "Segoe UI", sans-serif;
+    }
+
+    .below-block-bar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .add-examiner-inline {
+      border: 1px dashed #64748b;
+      background: #f8fafc;
+      color: var(--accent);
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 6px;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    .add-examiner-inline:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+    }
+
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     table {
       width: 100%;
+      min-width: 680px;
       border-collapse: collapse;
       table-layout: fixed;
       border: 1.5px solid var(--print-line);
@@ -341,7 +442,7 @@
     .col-fnan { width: 8%; text-align: center; }
     .col-reg { width: 17%; }
     .col-count { width: 8%; }
-    .col-sign { width: 7%; }
+    .col-sign { width: 7%; text-align: center; }
 
     textarea.cell-input, input.cell-input {
       width: 100%;
@@ -375,8 +476,9 @@
       border: none;
       background: transparent;
       color: #dc2626;
-      font-size: 12px;
-      padding: 0 2px;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 2px 6px;
       cursor: pointer;
     }
 
@@ -397,8 +499,43 @@
       font-size: 14px;
     }
 
+    /* Paper-wise Summary Section */
+    .paper-summary-section {
+      margin-top: 22px;
+      font-family: Cambria, "Times New Roman", serif;
+      break-inside: avoid;
+    }
+
+    .paper-summary-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      letter-spacing: 0.03em;
+    }
+
+    .summary-table {
+      min-width: 100%;
+    }
+
+    .summary-table th {
+      background: #f8fafc;
+      font-size: 11px;
+      padding: 5px 8px;
+    }
+
+    .summary-table td {
+      font-size: 12px;
+      padding: 5px 8px;
+    }
+
+    .sum-col-sl { width: 8%; text-align: center; }
+    .sum-col-course { width: 54%; }
+    .sum-col-qp { width: 20%; text-align: center; }
+    .sum-col-count { width: 18%; text-align: center; font-weight: 700; }
+
     .footer-summary {
-      margin-top: 24px;
+      margin-top: 22px;
       padding-top: 14px;
       border-top: 2px solid var(--print-line);
       font-family: Cambria, "Times New Roman", serif;
@@ -407,6 +544,7 @@
       align-items: flex-end;
       flex-wrap: wrap;
       gap: 20px;
+      break-inside: avoid;
     }
 
     .grand-box {
@@ -454,14 +592,40 @@
 
     @media (max-width: 768px) {
       .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .meta-grid {
         grid-template-columns: 1fr;
       }
       .sheet {
-        padding: 14px;
+        padding: 14px 12px;
       }
-      th, td {
-        font-size: 11px;
-        padding: 4px;
+      .dept-oval {
+        padding: 4px 12px;
+        width: 100%;
+        justify-content: center;
+      }
+      .dept-oval-input {
+        min-width: 140px;
+        width: 100%;
+      }
+      textarea.cell-input,
+      input.cell-input,
+      .inline-input,
+      .meta-input,
+      .examiner-name-input,
+      .college-input,
+      .dept-oval-input,
+      .sem-select {
+        font-size: 16px !important;
+      }
+      .sign-cols {
+        width: 100%;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .sign-line {
+        min-width: 130px;
       }
     }
 
@@ -475,7 +639,7 @@
         background: #ffffff;
       }
 
-      .topbar, .kpi-grid, .block-controls, .row-del-btn, .toast, .no-print {
+      .topbar, .kpi-grid, .block-controls, .below-block-bar, .row-del-btn, .toast, .no-print {
         display: none !important;
       }
 
@@ -491,13 +655,21 @@
         padding: 0;
       }
 
-      th {
+      .table-scroll {
+        overflow: visible !important;
+      }
+
+      table {
+        min-width: 100% !important;
+      }
+
+      th, .summary-table th {
         background: #ffffff !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
 
-      .gross-row td, .grand-box {
+      .gross-row td, .grand-box, .dept-oval {
         background: #ffffff !important;
       }
 
@@ -508,15 +680,30 @@
       textarea.cell-input, input.cell-input, .inline-input, .meta-input, .examiner-name-input {
         background: transparent !important;
         border-color: #000000 !important;
+        font-size: 12px !important;
       }
 
       .college-input {
         background: transparent !important;
         border-bottom: none !important;
+        font-size: 16px !important;
       }
 
-      .college-input:placeholder-shown {
-        border-bottom: 1px dotted #000000 !important;
+      .sem-select {
+        appearance: none;
+        -webkit-appearance: none;
+        border-bottom: none !important;
+        font-size: 14px !important;
+      }
+
+      .inline-input {
+        border-bottom: none !important;
+        font-size: 14px !important;
+      }
+
+      .dept-oval-input {
+        border-bottom: none !important;
+        font-size: 13px !important;
       }
     }
   </style>
@@ -525,7 +712,7 @@
   <header class="topbar">
     <div class="brand">
       <h1>University Paper Issue Register</h1>
-      <p>Calicut University FYUGP Examination Portal</p>
+      <p>Calicut University Odd Semester FYUGP Examinations</p>
     </div>
     <div class="actions">
       <button type="button" onclick="addExaminerBlock()">+ Add Examiner</button>
@@ -544,6 +731,10 @@
         <div class="kpi-value" id="kpiExaminers">0</div>
       </div>
       <div class="kpi-card">
+        <div class="kpi-label">Distinct Papers</div>
+        <div class="kpi-value" id="kpiPapers">0</div>
+      </div>
+      <div class="kpi-card">
         <div class="kpi-label">Total Entry Rows</div>
         <div class="kpi-value" id="kpiRows">0</div>
       </div>
@@ -555,23 +746,30 @@
 
     <section class="sheet" id="registerSheet">
       <div class="doc-header">
-        <div class="doc-title-line">
-          <span>CALICUT UNIVERSITY</span>
-          <input class="inline-input" id="semInput" style="width: 110px;" placeholder="FIFTH" oninput="onMetaChange()" />
-          <span>SEMESTER FYUGP EXAMINATIONS</span>
-          <input class="inline-input" id="monthYearInput" style="width: 150px;" placeholder="NOVEMBER 2026" oninput="onMetaChange()" />
-        </div>
-        <div class="doc-subtitle">UNIVERSITY PAPER ISSUE REGISTER</div>
         <div class="doc-college-wrap">
           <input class="college-input" id="collegeInput" placeholder="ENTER COLLEGE NAME & PLACE" oninput="onMetaChange()" />
+        </div>
+        <div class="doc-title-line">
+          <span>CALICUT UNIVERSITY</span>
+          <select class="sem-select" id="semInput" onchange="onMetaChange()">
+            <option value="FIRST">FIRST</option>
+            <option value="THIRD" selected>THIRD</option>
+            <option value="FIFTH">FIFTH</option>
+            <option value="SEVENTH">SEVENTH</option>
+          </select>
+          <span>SEMESTER FYUGP EXAMINATIONS</span>
+          <input class="inline-input" id="monthYearInput" style="width: 155px;" placeholder="NOVEMBER 2026" oninput="onMetaChange()" />
+        </div>
+        <div class="doc-subtitle">UNIVERSITY PAPER ISSUE REGISTER</div>
+        <div class="dept-oval-wrap">
+          <div class="dept-oval">
+            <label for="deptInput">DEPARTMENT :</label>
+            <input class="dept-oval-input" id="deptInput" placeholder="ENTER DEPARTMENT NAME" oninput="onMetaChange()" />
+          </div>
         </div>
       </div>
 
       <div class="meta-grid">
-        <div class="meta-row">
-          <label for="deptInput">DEPARTMENT :</label>
-          <input class="meta-input" id="deptInput" placeholder="ENTER DEPARTMENT NAME" oninput="onMetaChange()" />
-        </div>
         <div class="meta-row">
           <label for="chairmanInput">NAME OF CHAIRMAN :</label>
           <input class="meta-input" id="chairmanInput" placeholder="ENTER CHAIRMAN NAME" oninput="onMetaChange()" />
@@ -583,6 +781,22 @@
       </div>
 
       <div id="blocksContainer"></div>
+
+      <!-- Course / QP Code Wise Separate Count Summary -->
+      <div class="paper-summary-section" id="paperSummarySection" style="display:none;">
+        <div class="paper-summary-title">Paper-Wise Issue Summary (Course / QP Code)</div>
+        <table class="summary-table">
+          <thead>
+            <tr>
+              <th class="sum-col-sl">SL. NO</th>
+              <th class="sum-col-course">COURSE / PAPER NAME</th>
+              <th class="sum-col-qp">QP CODE</th>
+              <th class="sum-col-count">TOTAL COUNT</th>
+            </tr>
+          </thead>
+          <tbody id="paperSummaryBody"></tbody>
+        </table>
+      </div>
 
       <div class="footer-summary">
         <div class="grand-box">
@@ -599,7 +813,8 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const STORAGE_KEY = "cu_fyugp_paper_issue_register_v2";
+    const STORAGE_KEY = "cu_fyugp_paper_issue_register_v4";
+    const DEFAULT_COLLEGE = "MIC ARTS AND SCIENCE COLLEGE, ATHANIKKAL, VALLUVAMBRAM";
 
     function createEmptyRow() {
       return {
@@ -621,9 +836,9 @@
 
     function getDefaultState() {
       return {
-        semester: "FIFTH",
+        college: DEFAULT_COLLEGE,
+        semester: "THIRD",
         monthYear: "NOVEMBER 2026",
-        college: "",
         department: "",
         chairman: "",
         chiefExaminer: "",
@@ -638,15 +853,25 @@
 
     function loadState() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("mic_cu_fyugp_paper_issue_register_v1");
+        const raw =
+          localStorage.getItem(STORAGE_KEY) ||
+          localStorage.getItem("cu_fyugp_paper_issue_register_v3") ||
+          localStorage.getItem("cu_fyugp_paper_issue_register_v2") ||
+          localStorage.getItem("mic_cu_fyugp_paper_issue_register_v1");
         if (!raw) return getDefaultState();
         const parsed = JSON.parse(raw);
         if (!Array.isArray(parsed.blocks) || parsed.blocks.length === 0) {
           return getDefaultState();
         }
+        const validOdd = ["FIRST", "THIRD", "FIFTH", "SEVENTH"];
+        const sem = validOdd.includes((parsed.semester || "").toUpperCase())
+          ? parsed.semester.toUpperCase()
+          : "THIRD";
         return {
           ...getDefaultState(),
-          ...parsed
+          ...parsed,
+          college: parsed.college !== undefined && parsed.college !== "" ? parsed.college : DEFAULT_COLLEGE,
+          semester: sem
         };
       } catch {
         return getDefaultState();
@@ -682,9 +907,108 @@
       return block.rows.reduce((sum, r) => sum + parseMultiLineCount(r.count), 0);
     }
 
+    function computePaperBreakdown() {
+      const map = new Map();
+
+      state.blocks.forEach((block) => {
+        block.rows.forEach((row) => {
+          const courseLines = (row.course || "").split(/\r?\n/).map((s) => s.trim()).filter(Boolean);
+          const qpLines = (row.qpCode || "").split(/\r?\n/).map((s) => s.trim()).filter(Boolean);
+          const countLines = (row.count || "").split(/\r?\n/).map((s) => s.trim()).filter(Boolean);
+
+          const numItems = Math.max(courseLines.length, qpLines.length, countLines.length);
+          if (numItems === 0) return;
+
+          // If multiple courses/QPs share a single count line, attach full count to combined entry
+          if (countLines.length === 1 && (courseLines.length > 1 || qpLines.length > 1)) {
+            const cName = courseLines.join(" / ").toUpperCase() || "UNSPECIFIED COURSE";
+            const qCode = qpLines.join(" / ").toUpperCase() || "—";
+            const cnt = parseMultiLineCount(countLines[0]);
+            if (cnt > 0 || courseLines.length > 0 || qpLines.length > 0) {
+              const key = `${cName}||${qCode}`;
+              if (!map.has(key)) map.set(key, { course: cName, qpCode: qCode, count: 0 });
+              map.get(key).count += cnt;
+            }
+            return;
+          }
+
+          for (let i = 0; i < numItems; i++) {
+            const rawCourse = courseLines[i] || (courseLines.length === 1 ? courseLines[0] : "");
+            const rawQp = qpLines[i] || (qpLines.length === 1 ? qpLines[0] : "");
+            const rawCount = countLines[i] || "";
+
+            const cName = rawCourse.toUpperCase() || (rawQp ? "UNSPECIFIED COURSE" : "");
+            const qCode = rawQp.toUpperCase() || "—";
+            const cnt = parseMultiLineCount(rawCount);
+
+            if (!cName && cnt === 0) continue;
+
+            const key = `${cName || "UNSPECIFIED COURSE"}||${qCode}`;
+            if (!map.has(key)) {
+              map.set(key, {
+                course: cName || "UNSPECIFIED COURSE",
+                qpCode: qCode,
+                count: 0
+              });
+            }
+            map.get(key).count += cnt;
+          }
+        });
+      });
+
+      return Array.from(map.values());
+    }
+
+    function renderPaperSummary() {
+      const items = computePaperBreakdown();
+      const section = document.getElementById("paperSummarySection");
+      const tbody = document.getElementById("paperSummaryBody");
+      const kpiPapers = document.getElementById("kpiPapers");
+
+      kpiPapers.textContent = items.length;
+
+      if (items.length === 0) {
+        section.style.display = "none";
+        tbody.innerHTML = "";
+        return;
+      }
+
+      section.style.display = "block";
+      tbody.innerHTML = "";
+
+      let summaryTotal = 0;
+      items.forEach((item, idx) => {
+        summaryTotal += item.count;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="sum-col-sl">${idx + 1}</td>
+          <td class="sum-col-course">${escapeHtml(item.course)}</td>
+          <td class="sum-col-qp">${escapeHtml(item.qpCode)}</td>
+          <td class="sum-col-count">${item.count}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const totalTr = document.createElement("tr");
+      totalTr.className = "gross-row";
+      totalTr.innerHTML = `
+        <td colspan="3" class="gross-label">TOTAL PAPERS (ALL COURSES) :</td>
+        <td class="gross-val">${summaryTotal}</td>
+      `;
+      tbody.appendChild(totalTr);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
     function autoResizeTextarea(el) {
       el.style.height = "auto";
-      el.style.height = Math.max(22, el.scrollHeight) + "px";
+      el.style.height = Math.max(24, el.scrollHeight) + "px";
     }
 
     function autoResizeAllTextareas() {
@@ -692,9 +1016,9 @@
     }
 
     function onMetaChange() {
+      state.college = document.getElementById("collegeInput").value;
       state.semester = document.getElementById("semInput").value;
       state.monthYear = document.getElementById("monthYearInput").value;
-      state.college = document.getElementById("collegeInput").value;
       state.department = document.getElementById("deptInput").value;
       state.chairman = document.getElementById("chairmanInput").value;
       state.chiefExaminer = document.getElementById("chiefInput").value;
@@ -717,10 +1041,15 @@
       document.getElementById("kpiExaminers").textContent = state.blocks.length;
       document.getElementById("kpiRows").textContent = totalRows;
       document.getElementById("kpiGrandTotal").textContent = grandTotal;
+      renderPaperSummary();
     }
 
-    function addExaminerBlock() {
-      state.blocks.push(createEmptyBlock(4));
+    function addExaminerBlock(afterIdx = null) {
+      if (afterIdx === null || afterIdx === undefined) {
+        state.blocks.push(createEmptyBlock(4));
+      } else {
+        state.blocks.splice(afterIdx + 1, 0, createEmptyBlock(4));
+      }
       saveState();
       render();
       showToast("Added Additional Examiner section");
@@ -820,9 +1149,9 @@
     }
 
     function render() {
-      document.getElementById("semInput").value = state.semester || "";
-      document.getElementById("monthYearInput").value = state.monthYear || "";
       document.getElementById("collegeInput").value = state.college || "";
+      document.getElementById("semInput").value = state.semester || "THIRD";
+      document.getElementById("monthYearInput").value = state.monthYear || "";
       document.getElementById("deptInput").value = state.department || "";
       document.getElementById("chairmanInput").value = state.chairman || "";
       document.getElementById("chiefInput").value = state.chiefExaminer || "";
@@ -872,6 +1201,9 @@
         ctrlEl.append(addRowBtn, delBlockBtn);
         barEl.append(leftEl, ctrlEl);
 
+        const scrollWrap = document.createElement("div");
+        scrollWrap.className = "table-scroll";
+
         const table = document.createElement("table");
         table.innerHTML = `
           <thead>
@@ -909,7 +1241,11 @@
             ta.oninput = (e) => {
               state.blocks[bIdx].rows[rIdx][field] = e.target.value;
               autoResizeTextarea(e.target);
-              if (field === "count") updateTotalsOnly();
+              if (field === "count") {
+                updateTotalsOnly();
+              } else if (field === "course" || field === "qpCode") {
+                renderPaperSummary();
+              }
               saveState();
             };
             td.appendChild(ta);
@@ -946,7 +1282,20 @@
         `;
         tbody.appendChild(grossTr);
 
-        blockEl.append(barEl, table);
+        scrollWrap.appendChild(table);
+
+        const belowBar = document.createElement("div");
+        belowBar.className = "below-block-bar";
+
+        const addBelowBtn = document.createElement("button");
+        addBelowBtn.type = "button";
+        addBelowBtn.className = "add-examiner-inline";
+        addBelowBtn.textContent = "+ Add Additional Examiner";
+        addBelowBtn.onclick = () => addExaminerBlock(bIdx);
+
+        belowBar.appendChild(addBelowBtn);
+
+        blockEl.append(barEl, scrollWrap, belowBar);
         container.appendChild(blockEl);
       });
 
